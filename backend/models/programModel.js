@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const courseSchema = mongoose.Schema({
+const programSchema = mongoose.Schema({
     title : {
         type : String,
         required : true
@@ -14,8 +14,12 @@ const courseSchema = mongoose.Schema({
             type : mongoose.Schema.Types.ObjectId,
             ref : "task"
         }
-    ]
+    ],
+    programPic : {
+        type: String,
+        default : ""
+    }
 
 })
 
-module.exports = mongoose.model("course", courseSchema)
+module.exports = mongoose.model("program", programSchema)

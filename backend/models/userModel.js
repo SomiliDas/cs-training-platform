@@ -14,10 +14,10 @@ const userSchema = mongoose.Schema({
         required : true
     },
 
-    enrolledCourses : [
+    enrolledPrograms : [
         {
             type : mongoose.Schema.Types.ObjectId,
-            ref : "course"
+            ref : "program"
         }
     ],
 
@@ -29,6 +29,10 @@ const userSchema = mongoose.Schema({
     walletBalance : {
         type : Number,
         default : 0
+    },
+    profilePic : {
+        type : String,
+        default : "defaultProfilePic.jpg"
     }
 })
 

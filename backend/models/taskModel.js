@@ -9,9 +9,9 @@ const taskSchema = mongoose.Schema({
         type : String,
         required : true
     },
-    course : {
+    program : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "course"
+        ref : "program"
     },
     cost : {
         type : Number,
