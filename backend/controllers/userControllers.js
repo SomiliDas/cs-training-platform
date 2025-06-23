@@ -1,0 +1,195 @@
+const userModel = require("../models/userModel")
+const programModel = require("../models/programModel")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+const tokenGenerator = require("../utils/jwtTokenGenerator")
+
+const registerUser = async (req, res)=>{
+    let {name, email, password} = req.body
+    let user = await userModel.findOne({email})
+    if(user){
+        return res.status(400).redirect("/users/login")
+    }
+    else{
+        try{
+            bcrypt.genSalt(10, (err, salt)=>{
+                bcrypt.hash(password, salt, async (err, hash)=>{
+                    user = await userModel.create({
+                                name,
+                                email,
+                                password : hash,
+                                profilePic : req.file.filename
+                            })
+                    let token = tokenGenerator(user)
+                    res.cookie("token", token)
+                    res.status(201).redirect(`/users/profile/${user._id}`)
+                })
+            })
+        } catch(err){
+            res.status(500).send(err.message)
+        }
+    }
+
+}
+
+
+const loginUser = async(req, res)=>{
+    if(req.cookies.token && req.cookies.token !== ""){
+        let data = jwt.verify(req.cookies.token, process.env.JWT_SECRET)
+        let user = await userModel.findOne({email : data.email})
+        if(user){
+            return res.redirect(`/users/profile/${user._id}`)
+        }
+    }
+    else{
+        try{
+
+            let {email, password} = req.body
+            let user = await userModel.findOne({email})
+            if(!user){
+                res.status(400).send("something went wrong")
+            }
+            else{
+                let pass = await bcrypt.compare(password, user.password)
+                if(pass){
+                    let token = tokenGenerator(user)
+                    res.cookie("token", token)
+                    return res.status(200).redirect(`users/profile/${user._id}`)
+                }
+                else{
+                    return res.status(400).send("something went wrong")
+                }
+            }
+
+        }catch(err){
+            res.status(500).send(err.message)
+        }
+    }
+}
+
+
+
+const getUserProfile = async (req, res)=>{
+    let id = req.params.id
+    let user = await userModel.findOne({_id : id}).select("-password")
+    if(!user){
+        return res.status(400).json( {message : "no user found"})
+    }
+    else{
+        return res.status(200).json({user})
+    }
+}
+
+
+const updateProfile = (req, res)=>{
+    try{
+        let id = req.params.id
+        let {name, email, password} = req.body
+        bcrypt.genSalt(10, (err, salt)=>{
+            bcrypt.hash(password, salt, async(err, hash)=>{
+                let user = await userModel.findOneAndUpdate({_id : id}, {$set : {name, email,  password: hash}}, { new: true })
+                if(req.file){
+                    user.profilePic = req.file.filename 
+                    await user.save()
+                }
+                res.status(200).redirect(`/users/profile/${user._id}`)
+            })
+        })
+    }catch(err){
+        res.status(500).send(err.message)
+    }
+}
+
+
+
+const enrollInProgram = async (req, res)=>{
+    try{
+        let programId = req.params.programId
+        let studentId = req.user.userId
+        let user = await userModel.findOne({_id : studentId})
+        let program = await programModel.findOne({_id : programId})
+        if(user && program){
+            if (user.enrolledPrograms.includes(program._id)) {
+                return res.status(400).send("Already enrolled in this program");
+            }
+            user.enrolledPrograms.push(program._id)
+            await user.save()
+            res.status(200).redirect(`/users/profile/${user._id}`)
+        }
+    } catch(err){
+        res.status(500).send(err.message)
+    }
+
+}
+
+
+const walletBalance = async(req, res)=>{
+    try{
+        let id = req.params.id
+        let user = await userModel.findOne({_id : id})
+        if(!user){
+            return res.status(404).send("no user found")
+        }
+        else{
+            return res.status(200).json({walletBalance : user.walletBalance})
+        }
+    }catch(err){
+        res.status(500).send(err.message)
+    }
+}
+
+
+const addToWallet = async (req, res)=>{
+    try{
+        let amount = Number(req.body.amount)
+        let id = req.user.userId
+        let user = await userModel.findOne({_id : id})
+        if(!user){
+            res.status(404).send("user not found")
+        }
+        else{
+            user.walletBalance += amount
+            await user.save()
+            res.status(200).redirect(`/users/profile/${user._id}`)
+        }
+    }catch(err){
+        res.status(500).send(err.message)
+    }
+}
+
+
+
+const getAllUsers = async(req, res)=>{
+    try{
+        let users = await userModel.find().select("-password")
+        res.status(200).json({users})
+    }catch(err){
+        res.status(500).send(err.message)
+    }
+}
+
+
+
+const deleteUser = async (req, res)=>{
+    try{
+        let id = req.params.id
+        let user = await userModel.findOneAndDelete({_id : id})
+        if(!user){
+            return res.status(404).send("user not found")
+        }
+        else{
+            res.status(200).redirect("/users/admins/getUsers")
+        }
+    }catch(err){
+        res.status(500).send(err.message)
+    }
+}
+
+
+const logout = (req, res)=>{
+    res.clearCookie("token")
+    res.status(200).redirect("/users/login")
+}
+
+
+module.exports = {registerUser, loginUser, getUserProfile, updateProfile, enrollInProgram, walletBalance, addToWallet, getAllUsers, deleteUser, logout}
