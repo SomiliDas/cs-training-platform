@@ -4,6 +4,7 @@ require("dotenv").config()
 
 const dbConnection = require("./config/dbConnection")
 
+
 app.get("/", (req, res)=>{
     res.send("hello")
 })
