@@ -26,7 +26,7 @@ const registerUser = async (req, res)=>{
                 })
             })
         } catch(err){
-            res.status(500).send(err.message)
+            res.status(500).json({message : err.message})
         }
     }
 
@@ -47,7 +47,7 @@ const loginUser = async(req, res)=>{
             let {email, password} = req.body
             let user = await userModel.findOne({email})
             if(!user){
-                res.status(400).send("something went wrong")
+                res.status(400).json({message : "something went wrong"})
             }
             else{
                 let pass = await bcrypt.compare(password, user.password)
@@ -57,12 +57,12 @@ const loginUser = async(req, res)=>{
                     return res.status(200).redirect(`users/profile/${user._id}`)
                 }
                 else{
-                    return res.status(400).send("something went wrong")
+                    return res.status(400).json({message : "something went wrong"})
                 }
             }
 
         }catch(err){
-            res.status(500).send(err.message)
+            res.status(500).json({message : err.message})
         }
     }
 }
@@ -73,7 +73,7 @@ const getUserProfile = async (req, res)=>{
     let id = req.params.id
     let user = await userModel.findOne({_id : id}).select("-password")
     if(!user){
-        return res.status(400).json( {message : "no user found"})
+        return res.status(400).json( {message : "user not found"})
     }
     else{
         return res.status(200).json({user})
@@ -96,7 +96,7 @@ const updateProfile = (req, res)=>{
             })
         })
     }catch(err){
-        res.status(500).send(err.message)
+        res.status(500).json({message : err.message})
     }
 }
 
@@ -110,14 +110,17 @@ const enrollInProgram = async (req, res)=>{
         let program = await programModel.findOne({_id : programId})
         if(user && program){
             if (user.enrolledPrograms.includes(program._id)) {
-                return res.status(400).send("Already enrolled in this program");
+                return res.status(400).json({message : "Already enrolled in this program"});
             }
             user.enrolledPrograms.push(program._id)
             await user.save()
             res.status(200).redirect(`/users/profile/${user._id}`)
         }
+        else{
+            return res.status(404).json({ message: "User or Program not found" });
+        }
     } catch(err){
-        res.status(500).send(err.message)
+        res.status(500).json({message : err.message})
     }
 
 }
@@ -128,13 +131,13 @@ const walletBalance = async(req, res)=>{
         let id = req.params.id
         let user = await userModel.findOne({_id : id})
         if(!user){
-            return res.status(404).send("no user found")
+            return res.status(404).json({message : "user not found"})
         }
         else{
             return res.status(200).json({walletBalance : user.walletBalance})
         }
     }catch(err){
-        res.status(500).send(err.message)
+        res.status(500).json({message : err.message})
     }
 }
 
@@ -145,7 +148,7 @@ const addToWallet = async (req, res)=>{
         let id = req.user.userId
         let user = await userModel.findOne({_id : id})
         if(!user){
-            res.status(404).send("user not found")
+            res.status(404).json({message : "user not found"})
         }
         else{
             user.walletBalance += amount
@@ -153,7 +156,7 @@ const addToWallet = async (req, res)=>{
             res.status(200).redirect(`/users/profile/${user._id}`)
         }
     }catch(err){
-        res.status(500).send(err.message)
+        res.status(500).json({message : err.message})
     }
 }
 
@@ -164,7 +167,7 @@ const getAllUsers = async(req, res)=>{
         let users = await userModel.find().select("-password")
         res.status(200).json({users})
     }catch(err){
-        res.status(500).send(err.message)
+        res.status(500).json({message : err.message})
     }
 }
 
@@ -175,13 +178,13 @@ const deleteUser = async (req, res)=>{
         let id = req.params.id
         let user = await userModel.findOneAndDelete({_id : id})
         if(!user){
-            return res.status(404).send("user not found")
+            return res.status(404).json({message : "user not found"})
         }
         else{
             res.status(200).redirect("/users/admins/getUsers")
         }
     }catch(err){
-        res.status(500).send(err.message)
+        res.status(500).json({message : err.message})
     }
 }
 
