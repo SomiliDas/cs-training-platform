@@ -5,7 +5,7 @@ const router = express.Router()
 const isLoggedIn = require("../middlewares/isLoggedIn")
 const isAdmin = require("../middlewares/isAdmin")
 
-const {getPrograms, getProgramById, createProgram, updateProgram, deleteProgram} = require("../controllers/programControllers")
+const {getPrograms, getProgramById, createProgram, updateProgram, deleteProgram} = require("../controllers/programController")
 
 
 router.get("/getPrograms", isLoggedIn, getPrograms)
