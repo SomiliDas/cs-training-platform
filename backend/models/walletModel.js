@@ -6,21 +6,9 @@ const walletSchema = mongoose.Schema({
         ref : "user"
     },
 
-    amount : {
-        type : Number,
-        required : true
-    },
-
-    reason : {
-        type : String   // reasons as in "enrolling", "task attempting" etc
-    },
     balance : {
-        type : Number
-    },
-    transactionType : {
-        type : String,
-        enum : ["credit", "debit"],
-        required : true
+        type : Number,
+        default : 0
     }
     
 })
