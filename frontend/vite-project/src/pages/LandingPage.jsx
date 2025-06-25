@@ -3,7 +3,7 @@ import Header from '../components/Header'
 
 const LandingPage = () => {
   return (
-    <div className='bg-white'>
+    <div className='bg-white px-10'>
       <Header/>
       <div className='bg-white p-10 text-center'>
         <p className='text-[60px] font-bold text-blue-950 my-5'>Flight Training Platform</p>

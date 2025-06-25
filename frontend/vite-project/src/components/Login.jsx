@@ -13,7 +13,9 @@ function Login() {
             <input type='password' name='password' required placeholder='Enter Password' className='w-full bg-white p-2 border-1 border-gray-300 rounded-lg '/>
         </div>
         <input type='submit' value={"Log In"} className='w-full bg-blue-600 text-white p-2 rounded-lg cursor-pointer font-bold text-[20px] mb-5 hover:underline'/>
-        <button className='text-blue-950 font-bold hover:underline cursor-pointer'>Forgot Password</button>
+        <div className='text-center'>
+          <button className='text-blue-950 font-bold hover:underline cursor-pointer'>Forgot Password</button>
+        </div>
       </form>
     </div>
   )
