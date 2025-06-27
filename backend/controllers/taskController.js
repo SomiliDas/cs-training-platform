@@ -51,7 +51,7 @@ const createTask = async(req, res)=>{
             await task.save()
             program.tasks.push(task._id)
             await program.save()
-            return res.status(201).redirect(`/tasks/getTasks/${program._id}`)
+            return res.status(201).json({task})
         }
     }catch(err){
         return res.status(500).json({message : err.message})
@@ -69,7 +69,7 @@ const updateTask = async (req, res)=>{
             return res.status(404).json({message : "task not found"})
         }
         else{
-            return res.status(200).redirect(`/tasks/${updatedTask._id}`)
+            return res.status(200).json({updatedTask})
         }
 
     }catch(err){
@@ -89,7 +89,24 @@ const deleteTask = async(req, res)=>{
             let program = await programModel.findOne({_id : task.program})
             program.tasks.pull(task._id)
             await program.save()
-            return res.status(200).redirect(`/tasks/getTasks/${program._id}`)
+            return res.status(200).json({message : "deleted succesfully"})
+        }
+    }catch(err){
+        return res.status(500).json({message : err.message})
+    }
+}
+
+const getAllTasks = async(req, res)=>{
+    try{
+        let tasks = await taskModel.find().populate({path: 'program',
+        select: 'title'})
+        if(!tasks){
+            return res.status(404).json({message : "no tasks found"})
+        }
+        else{
+
+            return res.status(200).json({tasks})
+
         }
     }catch(err){
         return res.status(500).json({message : err.message})
@@ -99,6 +116,4 @@ const deleteTask = async(req, res)=>{
 
 
 
-
-
-module.exports = {getTasks, getTask, createTask, updateTask, deleteTask}
+module.exports = {getTasks, getTask, createTask, updateTask, deleteTask, getAllTasks}

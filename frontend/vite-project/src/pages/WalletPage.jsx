@@ -1,10 +1,14 @@
 import React from 'react'
-import Header from '../components/Header'
+import { useNavigate } from 'react-router-dom'
+import HeaderUser from '../components/HeaderUser'
 
 export default function WalletPage() {
+
+    const navigate = useNavigate()
+
   return (
-    <div className='bg-white px-10'>
-      <Header/>
+    <div className='bg-white'>
+      <HeaderUser/>
 
             <div>
                 <p className='block text-center text-[40px] font-extrabold text-blue-950 my-10 '>Wallet Overview</p>
@@ -15,7 +19,7 @@ export default function WalletPage() {
                                 <div className="text-[20px] text-blue-950 font-bold">
                                 Current Balance: <span className="font-bold text-green-600">Rs. 1500.00</span>
                                 </div>
-                                <input type='submit' value={"TopUp"} className="bg-blue-600 text-white px-5 py-2 rounded-lg font-bold hover:underline"/>
+                                <input type='submit' value={"TopUp"} className="bg-blue-600 text-white px-5 py-2 rounded-lg font-bold hover:underline" onClick={()=>(navigate("/users/topup"))}/>
                             </div>
 
                     

@@ -1,26 +1,50 @@
-import React from 'react'
-import Header from '../components/Header'
+import React, { useEffect, useState } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-
-
-const students = [
-  { name: "John Doe", course: "Flight Basics", progress: 85, status: "In Progress" },
-  { name: "Jane Smith", course: "Advanced Navigation", progress: 60, status: "In Progress" },
-  { name: "Alan Turing", course: "Meteorology", progress: 100, status: "Completed" },
-  { name: "Grace Hopper", course: "Air Traffic Communication", progress: 40, status: "In Progress" },
-];
-
-const progressData = [
-  { name: "Completed", value: 1 },
-  { name: "In Progress", value: 3 },
-];
+import HeaderAdmin from '../components/HeaderAdmin';
 
 const COLORS = ["#00C49F", "#FFBB28"];
 
 export default function StudentProgressPage() {
+
+    const[students, setStudents] = useState([])
+    const[progressData, setProgressData] = useState([])
+
+    useEffect(()=>{
+        const fetchProgress = async ()=>{
+            try{
+                let res = await fetch("http://localhost:8000/progress/admin/view", {
+                    method:"GET",
+                    credentials : "include"
+                })
+                if(!res.ok){
+                    alert("failed to fetch data")
+                }
+                else{
+                    let data = await res.json()
+                    setStudents(data.summary)
+                    const completed = data.summary.filter(s=>s.status === "Completed").length
+                    const inProgress = data.summary.length - completed
+                    setProgressData([
+                        {name : "Completed", value : completed},
+                        {name : "In Progress", value : inProgress}
+                    ])
+                }
+            }catch(err){
+                console.log(err)
+            }
+        }
+
+        fetchProgress()
+
+    }, [])
+
+
+
+
+
   return (
-    <div className='bg-white px-10'>
-      <Header/>
+    <div className='bg-white'>
+      <HeaderAdmin/>
       <div>
         <div className="min-h-screen p-6">
             <h1 className="text-[45px] font-bold text-center mb-8 text-blue-950">Student Progress DashBoard</h1>
@@ -30,7 +54,7 @@ export default function StudentProgressPage() {
                     <h2 className="text-xl font-semibold mb-4 text-blue-950">Overall Student Progress</h2>
                     <ResponsiveContainer width="100%" height={250}>
                         <BarChart data={students}>
-                            <XAxis dataKey="name" />
+                            <XAxis dataKey="studentName" />
                             <YAxis dataKey="progress"/>
                             <Bar dataKey="progress" fill="blue" />
                             <Tooltip/>
@@ -69,8 +93,8 @@ export default function StudentProgressPage() {
                 <tbody>
                 {students.map((student, index) => (
                     <tr key={index} className="border-t hover:bg-blue-50">
-                    <td className="p-3">{student.name}</td>
-                    <td className="p-3">{student.course}</td>
+                    <td className="p-3">{student.studentName}</td>
+                    <td className="p-3">{student.programName}</td>
                     <td className="p-3">{student.progress}%</td>
                     <td className={`p-3 font-semibold ${student.status === "Completed" ? "text-green-600" : "text-yellow-600"}`}>
                         {student.status}

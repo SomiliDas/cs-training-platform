@@ -1,22 +1,54 @@
 import React from "react"
+import { useState } from "react"
 
 
 
 function SignUp() {
+
+  let[name, setName] = useState("")
+  let[email, setEmail] = useState("")
+  let[password, setPassword] = useState("")
+
+  let handleSignUp = async(e)=>{
+    e.preventDefault()
+    try{
+
+      const res = await fetch("http://localhost:8000/users/register", {
+        method : "POST",
+        headers : {
+           'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({name, email, password}),
+        credentials : "include",
+        redirect : "follow"
+      })
+      const data = await res.json()
+      if(res.ok && data.userId){
+        window.location.href = `/users/profile/${data.userId}`
+      }
+      else{
+        alert(data.message || "registration failed")
+      }
+
+    } catch (err){
+      console.log(err)
+    }
+  }
+
   return (
     <div className='mt-2 py-4 px-6'>
-      <form>
+      <form onSubmit={handleSignUp}>
         <div className='mb-5' >
             <label className='text-blue-950 font-medium block text-left'>Name</label>
-            <input type='text' name='name' required placeholder='Enter Name' className='w-full bg-white p-2 border-1 border-gray-300 rounded-lg '/>
+            <input type='text' name='name' value={name} required placeholder='Enter Name' className='w-full bg-white p-2 border-1 border-gray-300 rounded-lg ' onChange={(e)=>(setName(e.target.value))}/>
         </div>
         <div className='mb-5' >
             <label className='text-blue-950 font-medium block text-left'>Email</label>
-            <input type='text' name='email' required placeholder='Enter Email' className='w-full bg-white p-2 border-1 border-gray-300 rounded-lg '/>
+            <input type='text' name='email' value={email} required placeholder='Enter Email' className='w-full bg-white p-2 border-1 border-gray-300 rounded-lg ' onChange={(e)=>(setEmail(e.target.value))}/>
         </div>
         <div className='mb-5'>
             <label className='text-blue-950 font-medium block text-left'>Password</label>
-            <input type='password' name='password' required placeholder='Enter Password' className='w-full bg-white p-2 border-1 border-gray-300 rounded-lg '/>
+            <input type='password' name='password' value={password} required placeholder='Enter Password' className='w-full bg-white p-2 border-1 border-gray-300 rounded-lg ' onChange={(e)=>(setPassword(e.target.value))}/>
         </div>
         <input type='submit' value={"Sign Up"} className='w-full bg-blue-600 text-white p-2 rounded-lg cursor-pointer font-bold text-[20px] mb-5 hover:underline'/>
     

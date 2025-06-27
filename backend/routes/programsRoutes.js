@@ -7,8 +7,9 @@ const isAdmin = require("../middlewares/isAdmin")
 
 const {getPrograms, getProgramById, createProgram, updateProgram, deleteProgram} = require("../controllers/programController")
 
+const upload = require("../config/multer")
 
-router.get("/getPrograms", isLoggedIn, getPrograms)
+router.get("/getPrograms", getPrograms)
 
 router.get("/:programId", isLoggedIn, getProgramById)
 
@@ -16,9 +17,9 @@ router.get("/:programId", isLoggedIn, getProgramById)
 
 
 
-router.post("/create", isLoggedIn, isAdmin, createProgram)
+router.post("/create", upload.single("programPic"), isLoggedIn, isAdmin, createProgram)
 
-router.put("/update/:programId" , isLoggedIn, isAdmin, updateProgram)
+router.put("/update/:programId" , isLoggedIn, isAdmin, upload.single("programPic"), updateProgram)
 
 router.delete("/delete/:programId", isLoggedIn, isAdmin, deleteProgram)
 

@@ -44,7 +44,7 @@ const createProgram = async (req, res)=>{
             program.programPic = req.file.filename
             await program.save()
         }
-        return res.status(201).redirect("/programs/getPrograms")
+        return res.status(201).json({message : "program created succesfully"})
 
 
     }catch(err){
@@ -66,7 +66,7 @@ const updateProgram = async(req, res)=>{
             program.programPic = req.file.filename
             await program.save()
         }
-        return res.status(200).redirect("/programs/getPrograms")
+        return res.status(200).json({message : "updated successfully"})
     }catch(err){
         return res.status(500).json({message : err.message})
     }
@@ -80,7 +80,7 @@ const deleteProgram = async(req, res)=>{
         if(!program){
             return res.status(404).json({message : "program not found"})
         }
-        return res.status(200).redirect("/programs/getPrograms")
+        return res.status(200).json({message : "deleted successfully"})
     }catch(err){
         return res.status(500).json({message : err.message})
     }

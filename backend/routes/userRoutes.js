@@ -3,7 +3,7 @@ const router = express.Router()
 const upload = require("../config/multer")
 
 
-const {registerUser, loginUser, getUserProfile, updateProfile, enrollInProgram, walletBalance, addToWallet, logout, getAllUsers, deleteUser} = require("../controllers/userControllers")
+const {registerUser, loginUser, getUserProfile, updateProfile, enrollInProgram, walletBalance, addToWallet, logout, getAllUsers, deleteUser, getEnrolledPrograms, getId} = require("../controllers/userControllers")
 
 
 const isLoggedIn = require("../middlewares/isLoggedIn")
@@ -12,7 +12,7 @@ const isAdmin = require("../middlewares/isAdmin")
 
 
 
-router.post("/register",upload.single("profilePic"),  registerUser)
+router.post("/register",  registerUser)
 
 router.post("/login", loginUser)
 
@@ -27,6 +27,10 @@ router.get("/wallet/:id", isLoggedIn, walletBalance )
 router.post("/wallet/add", isLoggedIn, addToWallet)
 
 router.get("/logout",isLoggedIn, logout)
+
+router.get("/enrolledPrograms",isLoggedIn, getEnrolledPrograms)
+
+router.get("/getId", isLoggedIn, getId)
 
 
 

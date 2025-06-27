@@ -4,8 +4,10 @@ import SignUp from '../components/SignUp'
 
 const AuthPage = () => {
     let [status, setStatus] = useState("login")
+    
+
   return (
-    <div className='bg-white px-10 flex justify-center items-center h-screen'>
+    <div className='bg-white flex px-10 justify-center mt-10 '>
 
         <div className='bg-white shadow-2xl shadow-gray-500 w-[45%] h-[75%] p-5'>
             <p className='text-[30px] font-bold text-blue-950 mt-5 mb-2 text-center'>Flight Training Platform</p>

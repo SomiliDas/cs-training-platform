@@ -6,13 +6,14 @@ const isLoggedIn = require("../middlewares/isLoggedIn")
 const isAdmin = require("../middlewares/isAdmin")
 
 
-const {getTasks, getTask, createTask, updateTask, deleteTask } = require("../controllers/taskController")
+const {getTasks, getTask, createTask, updateTask, deleteTask, getAllTasks } = require("../controllers/taskController")
 
-
+router.get("/allTasks", isLoggedIn, isAdmin, getAllTasks)
 
 router.get("/getTasks/:programId",isLoggedIn, getTasks)
 
 router.get("/:taskId",isLoggedIn, getTask)
+
 
 
 

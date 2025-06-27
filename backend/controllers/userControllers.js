@@ -3,6 +3,8 @@ const programModel = require("../models/programModel")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const tokenGenerator = require("../utils/jwtTokenGenerator")
+const taskModel = require("../models/taskModel")
+const progressModel = require("../models/progressModel")
 
 const registerUser = async (req, res)=>{
     let {name, email, password} = req.body
@@ -17,12 +19,15 @@ const registerUser = async (req, res)=>{
                     user = await userModel.create({
                                 name,
                                 email,
-                                password : hash,
-                                profilePic : req.file.filename
+                                password : hash
                             })
+                    if(req.body.role){
+                        user.role = req.body.role
+                        await user.save()
+                    }
                     let token = tokenGenerator(user)
                     res.cookie("token", token)
-                    res.status(201).redirect(`/users/profile/${user._id}`)
+                    res.status(201).json({userId : user._id})
                 })
             })
         } catch(err){
@@ -38,7 +43,7 @@ const loginUser = async(req, res)=>{
         let data = jwt.verify(req.cookies.token, process.env.JWT_SECRET)
         let user = await userModel.findOne({email : data.email})
         if(user){
-            return res.redirect(`/users/profile/${user._id}`)
+            return res.json({userId : user._id})
         }
     }
     else{
@@ -54,7 +59,7 @@ const loginUser = async(req, res)=>{
                 if(pass){
                     let token = tokenGenerator(user)
                     res.cookie("token", token)
-                    return res.status(200).redirect(`users/profile/${user._id}`)
+                    return res.status(200).json({userId : user._id, role : user.role})
                 }
                 else{
                     return res.status(400).json({message : "something went wrong"})
@@ -92,7 +97,7 @@ const updateProfile = (req, res)=>{
                     user.profilePic = req.file.filename 
                     await user.save()
                 }
-                res.status(200).redirect(`/users/profile/${user._id}`)
+                res.status(200).json({message: "updated"})
             })
         })
     }catch(err){
@@ -114,7 +119,21 @@ const enrollInProgram = async (req, res)=>{
             }
             user.enrolledPrograms.push(program._id)
             await user.save()
-            res.status(200).redirect(`/users/profile/${user._id}`)
+
+            const tasks = await taskModel.find({program : programId})
+
+            for(let task of tasks){
+                const exists = await progressModel.findOne({student : studentId, task : task._id})
+                if(!exists){
+                    await progressModel.create({
+                        student : studentId,
+                        task : task._id,
+                        status : "In Progress"
+                    })
+                }
+            }
+
+            res.status(200).json({message : "progress model created"})
         }
         else{
             return res.status(404).json({ message: "User or Program not found" });
@@ -164,7 +183,7 @@ const addToWallet = async (req, res)=>{
 
 const getAllUsers = async(req, res)=>{
     try{
-        let users = await userModel.find().select("-password")
+        let users = await userModel.find({role : "student"}).select("-password")
         res.status(200).json({users})
     }catch(err){
         res.status(500).json({message : err.message})
@@ -181,7 +200,7 @@ const deleteUser = async (req, res)=>{
             return res.status(404).json({message : "user not found"})
         }
         else{
-            res.status(200).redirect("/users/admins/getUsers")
+            res.status(200).json({message : "deletion succesfull"})
         }
     }catch(err){
         res.status(500).json({message : err.message})
@@ -191,8 +210,29 @@ const deleteUser = async (req, res)=>{
 
 const logout = (req, res)=>{
     res.clearCookie("token")
-    res.status(200).redirect("/users/login")
+    res.status(200).json({message : "logout succesful"})
 }
 
 
-module.exports = {registerUser, loginUser, getUserProfile, updateProfile, enrollInProgram, walletBalance, addToWallet, getAllUsers, deleteUser, logout}
+const getEnrolledPrograms = async(req, res)=>{
+    try{
+        let userId = req.user.userId
+        let user = await userModel.findOne({_id : userId}).populate("enrolledPrograms")
+        if(!user){
+            return res.status(404).json({message :"user not found"})
+        }
+        let programs = user.enrolledPrograms
+        return res.status(200).json({programs})
+    }catch(err){
+        return res.status(500).json({message : err.message})
+    }
+}
+
+
+const getId = async(req, res)=>{
+    const userId = req.user.userId
+    return res.status(200).json({userId})
+}
+
+
+module.exports = {registerUser, loginUser, getUserProfile, updateProfile, enrollInProgram, walletBalance, addToWallet, getAllUsers, deleteUser, logout, getEnrolledPrograms, getId}

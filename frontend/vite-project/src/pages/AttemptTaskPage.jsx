@@ -1,10 +1,11 @@
 import React from 'react'
-import Header from '../components/Header'
+
+import HeaderUser from '../components/HeaderUser'
 
 export default function AttemptTaskPage() {
   return (
-    <div className='bg-white px-10'>
-        <Header/>
+    <div className='bg-white'>
+        <HeaderUser/>
         <p className='block text-center my-10 text-blue-950 text-[40px] font-bold'>Attempted Tasks </p>
         <div className='grid grid-cols-[48%_48%] gap-[4%]'>
             <div className='px-10'>
