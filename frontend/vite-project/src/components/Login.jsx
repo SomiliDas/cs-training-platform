@@ -26,6 +26,7 @@ function Login() {
        window.location.href = `/admin`
       }
       else{
+        toast.success("login successful")
          window.location.href = `/users/profile/${data.userId}`
       }
     } else {

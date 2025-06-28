@@ -19,7 +19,7 @@ const HeaderAdmin = () => {
         redirect : "follow"
       })
       if(!res.ok){
-        toast.error("LogOut Failed")
+        toast.error("Logout Failed")
       }
       else{
         toast.success("LogOut Successful")
