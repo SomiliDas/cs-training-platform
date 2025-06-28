@@ -6,6 +6,8 @@ const tokenGenerator = require("../utils/jwtTokenGenerator")
 const taskModel = require("../models/taskModel")
 const progressModel = require("../models/progressModel")
 const walletModel = require("../models/walletModel")
+const transactionModel = require("../models/transactionModel")
+const submissionModel = require("../models/submissionModel")
 
 const registerUser = async (req, res)=>{
     let {name, email, password, dob} = req.body
@@ -202,6 +204,10 @@ const deleteUser = async (req, res)=>{
     try{
         let id = req.params.id
         let user = await userModel.findOneAndDelete({_id : id})
+        let transactions = await transactionModel.deleteMany({user : id})
+        let submissions = await submissionModel.deleteMany({student : id})
+        let progress = await progressModel.deleteMany({student : id})
+        let wallet = await walletModel.findOneAndDelete({user : id})
         if(!user){
             return res.status(404).json({message : "user not found"})
         }

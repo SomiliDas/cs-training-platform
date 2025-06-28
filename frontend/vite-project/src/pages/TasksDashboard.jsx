@@ -91,6 +91,7 @@ export default function TasksDashboard() {
 
                             setTasks(updatedTasks)
                             toast.success("Updation Successful")
+                            return
                         }
         }
 
@@ -245,7 +246,7 @@ export default function TasksDashboard() {
                                                 <tr className='hover:bg-blue-100 border-b border-gray-300' key={idx}>
                                                 <td className='py-6 px-6 mx-2 text-center text-blue-950 font-medium'>{task.title}</td>
                                                 <td className='py-6 px-6 mx-2 text-center text-blue-950 max-w-[400px] whitespace-pre-wrap break-words text-sm'>{task.description }</td>
-                                                <td className='py-6 px-6 mx-2 text-center text-blue-950 font-medium'>{task.program.title}</td>
+                                                <td className='py-6 px-6 mx-2 text-center text-blue-950 font-medium'>{task.program?.title || ""}</td>
                                                 <td className='py-6 px-6 mx-2 text-center text-blue-950 font-semibold'>Rs. {task.cost}</td>
                                                 <td className='py-6 px-6 mx-2 text-blue-950 text-center'>
                                                     <div className="flex space-x-2 justify-center">

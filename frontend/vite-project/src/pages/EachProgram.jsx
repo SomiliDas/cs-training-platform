@@ -139,6 +139,7 @@ const EachProgram = () => {
     try{
 
       if(balance == 0){
+        toast.error("Balance 0")
         navigate("/users/topup")
         return
       }

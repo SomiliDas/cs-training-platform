@@ -28,6 +28,7 @@ export default function CreateProgram() {
             })
             if(!res.ok){
                 toast.error("failed to create program")
+                return
             }
             else{
                 toast.success("program created")

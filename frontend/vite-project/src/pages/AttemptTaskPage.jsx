@@ -21,7 +21,7 @@ export default function AttemptTaskPage() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    toast.error("something went wrong")
+                    // toast.error("something went wrong")
                 }
                 else{
                     let data = await res.json()
@@ -75,6 +75,7 @@ export default function AttemptTaskPage() {
             })
             if(!res.ok){
                 toast.error("failed to accept/complete task")
+                return
             }
             else{
                 let data = await res.json()
@@ -109,7 +110,7 @@ export default function AttemptTaskPage() {
             }
 
         })
-        attemptCount = TotalCount - (InProgCount + CompCount)
+        attemptCount = InProgCount + CompCount
         setTotalTasks(TotalCount)
         setTotalAttemptedTasks(attemptCount)
         setTotalInProgTasks(InProgCount)

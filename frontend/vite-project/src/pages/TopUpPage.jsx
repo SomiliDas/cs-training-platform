@@ -59,6 +59,7 @@ export default function TopUpPage() {
           
         if(!res.ok){
           toast.error("Insufficient amount. Payment Failed")
+          return
         }
         else{
           let data = await res.json()
@@ -87,14 +88,14 @@ export default function TopUpPage() {
               <span className="text-blue-600 font-bold">Rs. {balance}</span>
             </div>
 
-            <form>
+            <form onSubmit={(e)=>(payHandler(e, Number(amount)))}>
               <label className="block mb-2 text-blue-950 font-bold">
                 Enter Amount to Top Up:
               </label>
               <input
-                type="number" name='amount' value={amount} placeholder='Enter Amount' className="w-full p-3 mb-4 rounded-lg border border-gray-300 bg-white" onChange={(e)=>(setAmount(e.target.value))}/>
+                type="number" name='amount' required value={amount} placeholder='Enter Amount' className="w-full p-3 mb-4 rounded-lg border border-gray-300 bg-white" onChange={(e)=>(setAmount(e.target.value))}/>
 
-              <input type="submit" value={"Pay"} className="w-full py-2 bg-blue-600 text-white font-bold rounded-lg cursor-pointer hover:underline text-[20px]" onClick={(e)=>(payHandler(e, Number(amount)))}/>
+              <input type="submit" value={"Pay"} className="w-full py-2 bg-blue-600 text-white font-bold rounded-lg cursor-pointer hover:underline text-[20px]"/>
             
             </form>
           </div>

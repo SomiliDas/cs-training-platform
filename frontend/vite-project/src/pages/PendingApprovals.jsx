@@ -87,10 +87,10 @@ export default function PendingApprovals() {
                     :
                     subs.map((sub , idx)=>(
                         <tr className='hover:bg-blue-100 border-b border-gray-300' key={idx}>
-                            <td className='py-6 px-2 text-center text-blue-950 font-medium'>{sub.student.name}</td>
-                            <td className='py-6 px-2 text-center text-blue-950 font-medium'>{sub.student.email}</td>
-                            <td className='py-6 px-2 text-center text-blue-950 font-medium'>{sub.task.title}</td>
-                            <td className='py-6 px-2 text-center text-blue-950 font-medium'>{sub.task.program.title}</td>
+                            <td className='py-6 px-2 text-center text-blue-950 font-medium'>{sub.student?.name}</td>
+                            <td className='py-6 px-2 text-center text-blue-950 font-medium'>{sub.student?.email}</td>
+                            <td className='py-6 px-2 text-center text-blue-950 font-medium'>{sub.task?.title}</td>
+                            <td className='py-6 px-2 text-center text-blue-950 font-medium'>{sub.task.program?.title}</td>
                             <td>
                                 <div className="flex space-x-2 justify-center">
                                     <button className="bg-green-400 hover:underline text-white font-bold py-1 px-3 rounded text-sm" onClick={()=>(acceptHandler(sub.student._id, sub.task._id))}>Accept</button>

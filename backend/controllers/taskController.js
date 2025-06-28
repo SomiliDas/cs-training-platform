@@ -51,7 +51,8 @@ const createTask = async(req, res)=>{
             await task.save()
             program.tasks.push(task._id)
             await program.save()
-            return res.status(201).json({task})
+            let populatedTask = await taskModel.findById(task._id).populate("program")
+            return res.status(201).json({task : populatedTask})
         }
     }catch(err){
         return res.status(500).json({message : err.message})
