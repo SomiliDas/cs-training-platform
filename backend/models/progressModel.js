@@ -18,7 +18,7 @@ const progressSchema = mongoose.Schema({
     },
     status : {
         type : String,
-        enum : ["In Progress", "Completed"]
+        enum : ["Not Accepted","In Progress", "Completed"]
     }
 })
 

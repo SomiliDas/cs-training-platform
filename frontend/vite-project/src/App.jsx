@@ -18,6 +18,9 @@ import CreateProgram from './pages/CreateProgram'
 import UpdateProg from './pages/UpdateProg'
 import AllTasks from './pages/AllTasks'
 import PendingApprovals from './pages/PendingApprovals'
+import ProgressTracker from './pages/ProgressTracker'
+import MyProgs from './pages/MyProgs'
+import ForgotPassword from './pages/ForgotPassword'
 
 
 
@@ -31,6 +34,7 @@ function App() {
         <Route index element={<LandingPage/>} />
         <Route path='auth' element={<AuthPage/>} />
         <Route path='programs' element={<ProgramsPage/>} />
+        <Route path = "forgotpassword" element={<ForgotPassword/>} />
         <Route path="admin/">
           <Route index element={<AdminDashboard/>}/>
           <Route path="getusers" element={<GetAllStudents/>}/>
@@ -51,6 +55,8 @@ function App() {
           <Route path='program/:id' element={<EachProgram/>}/>
           <Route path='edit/:id' element={<EditProfile/>}/>
           <Route path='programs' element={<ProgramsPage/>} />
+          <Route path = "track" element={<ProgressTracker/>}/>
+          <Route path= "myProgs" element={<MyProgs/>} />
         </Route>
         
 

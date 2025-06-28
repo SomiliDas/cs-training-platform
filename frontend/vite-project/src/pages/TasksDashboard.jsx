@@ -62,7 +62,7 @@ export default function TasksDashboard() {
       }
     }
     getTasks()
-  }, [])
+  }, [tasks])
 
 
 
@@ -239,7 +239,7 @@ export default function TasksDashboard() {
                                             tasks.map((task, idx) => (
                                                 <tr className='hover:bg-blue-100 border-b border-gray-300' key={idx}>
                                                 <td className='py-6 px-6 mx-2 text-center text-blue-950 font-medium'>{task.title}</td>
-                                                <td className='py-6 px-6 mx-2 text-center text-blue-950 max-w-[400px] whitespace-pre-wrap break-words text-sm'>{task.description}</td>
+                                                <td className='py-6 px-6 mx-2 text-center text-blue-950 max-w-[400px] whitespace-pre-wrap break-words text-sm'>{task.description }</td>
                                                 <td className='py-6 px-6 mx-2 text-center text-blue-950 font-medium'>{task.program.title}</td>
                                                 <td className='py-6 px-6 mx-2 text-center text-blue-950 font-semibold'>Rs. {task.cost}</td>
                                                 <td className='py-6 px-6 mx-2 text-blue-950 text-center'>

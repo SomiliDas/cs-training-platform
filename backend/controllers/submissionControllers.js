@@ -6,7 +6,7 @@ const submissionModel = require("../models/submissionModel")
 const submitted = async(req, res)=>{
     try{
         const studentId = req.user.userId
-        const taskId = req.body.taskId
+        const taskId = req.params.taskId
         const exist = await submissionModel.findOne({student : studentId, task : taskId})
         if(exist){
             return res.status(400).json({message : "already exists"})
@@ -33,6 +33,28 @@ const viewPending = async(req, res)=>{
     }
 }
 
+const viewApproved = async(req, res)=>{
+    try{
+        const submissions = await submissionModel.find({status : "approved"}).populate("student", "name email _id").populate({path : "task", select : "title program _id", populate : {path : "program", select : "title"}})
+        return res.status(200).json({submissions})
+        
+    }catch(err){
+        return res.status(500).json({message : err.message})
+    }
+}
+
+const viewRejected = async(req, res)=>{
+    try{
+        const submissions = await submissionModel.find({status : "rejected"}).populate("student", "name email _id").populate({path : "task", select : "title program _id", populate : {path : "program", select : "title"}})
+        return res.status(200).json({submissions})
+        
+    }catch(err){
+        return res.status(500).json({message : err.message})
+    }
+}
+
+
+
 
 const approval = async (req, res)=>{
     try{
@@ -55,4 +77,4 @@ const rejection = async(req, res)=>{
     }
 }
 
-module.exports = {submitted, viewPending, approval, rejection}
+module.exports = {submitted, viewPending, approval, rejection, viewApproved, viewRejected}

@@ -67,7 +67,7 @@ export default function ProgramsPage() {
             </h1>
 
       <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-20">
-        {/* Program Card  */}
+       
         {
           programs.map((program)=>(
             <div className="bg-white rounded-xl shadow-md overflow-hidden">

@@ -8,6 +8,7 @@ function SignUp() {
   let[name, setName] = useState("")
   let[email, setEmail] = useState("")
   let[password, setPassword] = useState("")
+  let[dob, setDob] = useState("")
 
   let handleSignUp = async(e)=>{
     e.preventDefault()
@@ -18,7 +19,7 @@ function SignUp() {
         headers : {
            'Content-Type': 'application/json'
         },
-        body : JSON.stringify({name, email, password}),
+        body : JSON.stringify({name, email, password, dob}),
         credentials : "include",
         redirect : "follow"
       })
@@ -41,6 +42,10 @@ function SignUp() {
         <div className='mb-5' >
             <label className='text-blue-950 font-medium block text-left'>Name</label>
             <input type='text' name='name' value={name} required placeholder='Enter Name' className='w-full bg-white p-2 border-1 border-gray-300 rounded-lg ' onChange={(e)=>(setName(e.target.value))}/>
+        </div>
+        <div className='mb-5' >
+            <label className='text-blue-950 font-medium block text-left'>Date of Birth (DD/MM/YYYY)</label>
+            <input type='text' name='dob' value={dob} required placeholder='Enter Date of Birth' className='w-full bg-white p-2 border-1 border-gray-300 rounded-lg ' onChange={(e)=>(setDob(e.target.value))}/>
         </div>
         <div className='mb-5' >
             <label className='text-blue-950 font-medium block text-left'>Email</label>

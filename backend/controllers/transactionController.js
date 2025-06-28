@@ -5,7 +5,7 @@ const taskModel = require("../models/taskModel")
 
 const topUp = async(req, res)=>{
     try{
-        userId = req.user.userId
+        const userId = req.user.userId
         let user = await userModel.findOne({_id : userId})
         let wallet = await walletModel.findOne({user : userId})
         if(!wallet || !user){
@@ -27,7 +27,7 @@ const topUp = async(req, res)=>{
                 transactionType : "credit"
             })
 
-            return res.status(200).redirect(`/users/profile/${user._id}`)
+            return res.status(200).json({balance : wallet.balance})
 
         }
     }catch(err){
@@ -81,7 +81,7 @@ const deductMoney = async(req, res)=>{
             transactionType : "debit"
         })
 
-        return res.status(200).redirect("/transactions/balance")
+        return res.status(200).json({message : "transaction successful"})
     }catch(err){
         return res.status(500).json({message : err.message})
     }
@@ -99,7 +99,29 @@ const transactionHistory = async(req, res)=>{
 }
 
 
+const basePay = async(req, res)=>{
+    try{
+        let amount = Number(req.body.amount)
+        let userId = req.user.userId
+        if(amount < 5000){
+            return res.status(400).json({message : "Amount too low"})
+        }
+        else{
+            const transaction = await transactionModel.create({
+                user : userId,
+                amount,
+                balanceAfter : amount,
+                reason : "Base Pay",
+                transactionType : "credit"
+            })
+            const wallet = await walletModel.findOneAndUpdate({user : userId}, {$set : {balance : amount}}, {new : true})
+            const user = await userModel.findOneAndUpdate({_id : userId}, {$set : {walletBalance : amount}}, {new : true})
+            return res.status(200).json({balance : wallet.balance})
+        }
+    }catch(err){
+        return res.status(500).json({message : err.message})
+    }
+}
 
 
-
-module.exports = {topUp, getBalance, deductMoney, transactionHistory}
+module.exports = {topUp, getBalance, deductMoney, transactionHistory, basePay}

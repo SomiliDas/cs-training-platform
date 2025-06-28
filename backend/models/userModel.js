@@ -33,6 +33,10 @@ const userSchema = mongoose.Schema({
     profilePic : {
         type : String,
         default : "defaultProfilePic.jpg"
+    },
+    dob : {
+        type : String,
+        required : true
     }
 })
 

@@ -23,7 +23,7 @@ export default function StudentProgressPage() {
                     let data = await res.json()
                     setStudents(data.summary)
                     const completed = data.summary.filter(s=>s.status === "Completed").length
-                    const inProgress = data.summary.length - completed
+                    const inProgress = data.summary.filter(s=>s.status === "In Progress").length
                     setProgressData([
                         {name : "Completed", value : completed},
                         {name : "In Progress", value : inProgress}
@@ -49,7 +49,7 @@ export default function StudentProgressPage() {
         <div className="min-h-screen p-6">
             <h1 className="text-[45px] font-bold text-center mb-8 text-blue-950">Student Progress DashBoard</h1>
 
-            <div className="grid grid-cols-[66%_31%] gap-[3%] mb-10">
+            <div className="grid grid-cols-[66%_31%] gap-[3%] mb-10 px-20">
                 <div className="bg-white p-6 shadow-2xl">
                     <h2 className="text-xl font-semibold mb-4 text-blue-950">Overall Student Progress</h2>
                     <ResponsiveContainer width="100%" height={250}>
@@ -78,7 +78,7 @@ export default function StudentProgressPage() {
                 </div>
             </div>
 
-        <div className="bg-white shadow-2xl p-6">
+        <div className="bg-white shadow-2xl p-6 px-20">
             <h2 className="text-[20px] font-semibold mb-4 text-blue-950">Student Progress Table</h2>
             <div className="overflow-x-auto">
             <table className="min-w-full text-left text-md">

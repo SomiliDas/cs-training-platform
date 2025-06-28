@@ -1,3 +1,4 @@
+const { populate } = require("dotenv")
 const progressModel = require("../models/progressModel")
 const taskModel = require("../models/taskModel")
 const userModel = require("../models/userModel")
@@ -8,7 +9,7 @@ const updateProgress = async(req, res)=>{
         let taskId = req.params.taskId
         let studentId = req.user.userId
         let status = req.body.status
-        if (!["In Progress", "Completed"].includes(status)) {
+        if (!["Not Accepted","In Progress", "Completed"].includes(status)) {
             return res.status(400).json({ message: "Invalid status value" });
         }
         let progress_stud = await progressModel.findOneAndUpdate({student : studentId, task : taskId}, {$set : {status}}, {new : true})
@@ -67,5 +68,20 @@ const viewProgress = async(req, res)=>{
 }
 
 
+const getTasks = async(req, res)=>{
+    try{
+        const progressList = await progressModel.find({student : req.user.userId}).populate({path : "task", populate : {path : "program", model : "program"}})
+        if(progressList.length === 0){
+            return res.status(404).json({message : "not enrolled in any program"})
+        }
+        else{
+            const tasks = progressList.map((eachProgress)=>(eachProgress.task))
+            return res.status(200).json({tasks, progressList})
+        }
+    }catch(err){
+        return res.status(500).json({message : err.message})
+    }
+}
 
-module.exports = {updateProgress, viewProgress}
+
+module.exports = {updateProgress, viewProgress, getTasks}

@@ -6,7 +6,9 @@ const isLoggedIn = require("../middlewares/isLoggedIn")
 const isAdmin = require("../middlewares/isAdmin")
 
 
-const {updateProgress, viewProgress} = require("../controllers/progressController")
+const {updateProgress, viewProgress, getTasks} = require("../controllers/progressController")
+
+router.get("/tasks", isLoggedIn, getTasks)
 
 router.put("/update/:taskId", isLoggedIn, updateProgress)
 

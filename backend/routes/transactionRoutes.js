@@ -6,8 +6,9 @@ const isLoggedIn = require("../middlewares/isLoggedIn")
 
 
 
-const{topUp, getBalance, deductMoney, transactionHistory } = require("../controllers/transactionController")
+const{topUp, getBalance, deductMoney, transactionHistory, basePay } = require("../controllers/transactionController")
 
+router.post("/basepay", isLoggedIn, basePay)
 
 router.post("/topup", isLoggedIn, topUp)
 

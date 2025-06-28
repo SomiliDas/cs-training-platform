@@ -5,9 +5,10 @@ const jwt = require("jsonwebtoken")
 const tokenGenerator = require("../utils/jwtTokenGenerator")
 const taskModel = require("../models/taskModel")
 const progressModel = require("../models/progressModel")
+const walletModel = require("../models/walletModel")
 
 const registerUser = async (req, res)=>{
-    let {name, email, password} = req.body
+    let {name, email, password, dob} = req.body
     let user = await userModel.findOne({email})
     if(user){
         return res.status(400).redirect("/users/login")
@@ -19,12 +20,16 @@ const registerUser = async (req, res)=>{
                     user = await userModel.create({
                                 name,
                                 email,
+                                dob,
                                 password : hash
                             })
                     if(req.body.role){
                         user.role = req.body.role
                         await user.save()
                     }
+                    let wallet = await walletModel.create({
+                        user : user._id
+                    })
                     let token = tokenGenerator(user)
                     res.cookie("token", token)
                     res.status(201).json({userId : user._id})
@@ -45,6 +50,7 @@ const loginUser = async(req, res)=>{
         if(user){
             return res.json({userId : user._id})
         }
+        // res.status(400).json({message : "something went wrong"})
     }
     else{
         try{
@@ -128,12 +134,12 @@ const enrollInProgram = async (req, res)=>{
                     await progressModel.create({
                         student : studentId,
                         task : task._id,
-                        status : "In Progress"
+                        status : "Not Accepted"
                     })
                 }
             }
 
-            res.status(200).json({message : "progress model created"})
+            res.status(200).json({message : "enrolled successfully"})
         }
         else{
             return res.status(404).json({ message: "User or Program not found" });
@@ -234,5 +240,38 @@ const getId = async(req, res)=>{
     return res.status(200).json({userId})
 }
 
+const getUser = async(req, res)=>{
+    const userId = req.params.id
+    const user = await userModel.findOne({_id : userId})
+    if(!user){
+        return res.status(404).json({message : "user not found"})
+    }
+    else{
+        return res.status(200).json({user})
+    }
 
-module.exports = {registerUser, loginUser, getUserProfile, updateProfile, enrollInProgram, walletBalance, addToWallet, getAllUsers, deleteUser, logout, getEnrolledPrograms, getId}
+}
+
+
+const forgotPassword =  (req, res)=>{
+    try{
+        let {name, email, dob, newPass} = req.body
+        bcrypt.genSalt(10,  (err, salt)=>{
+            bcrypt.hash(newPass, salt, async(err, hash)=>{
+                let user = await userModel.findOneAndUpdate({name, email, dob}, {$set : {password : hash}}, {new : true})
+                if(!user){
+                    return res.status(404).json({message : "something went wrong"})
+                }
+                else{
+                    return res.status(200).json({message : "password changed successfully"})
+                }
+            })
+        })
+        
+    }catch(err){
+        res.status(500).json({mesaage : err.mesaage})
+    }
+}
+
+
+module.exports = {registerUser, loginUser, getUserProfile, updateProfile, enrollInProgram, walletBalance, addToWallet, getAllUsers, deleteUser, logout, getEnrolledPrograms, getId, getUser, forgotPassword}

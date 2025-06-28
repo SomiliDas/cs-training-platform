@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function Login() {
   
@@ -51,9 +52,9 @@ function Login() {
             <input type='password' name='password' value={password} required placeholder='Enter Password' className='w-full bg-white p-2 border-1 border-gray-300 rounded-lg ' onChange={(e)=>(setPassword(e.target.value))}/>
         </div>
         <input type='submit' value={"Log In"} className='w-full bg-blue-600 text-white p-2 rounded-lg cursor-pointer font-bold text-[20px] mb-5 hover:underline'/>
-        <div className='text-center'>
+        <Link to = "/forgotpassword"><div className='text-center'>
           <button className='text-blue-950 font-bold hover:underline cursor-pointer'>Forgot Password</button>
-        </div>
+        </div></Link>
       </form>
     </div>
   )

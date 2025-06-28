@@ -7,9 +7,12 @@ import HeaderAdmin from '../components/HeaderAdmin'
 const EachProgram = () => {
   const navigate = useNavigate()
   let[role, setRole] = useState("")
-  let id = useParams().id
-  let [program, setProgram] = useState("")
+  let progId = useParams().id
+  let [program, setProgram] = useState('')
   let[tasks, setTasks] = useState([])
+  let[balance, setBalance] = useState(0)
+  let[userId, setUserId] = useState('')
+  let[enrolledProgs, setEnrolledProgs] = useState([])
 
   useEffect(()=>{
     let data = getUserRoleFromCookie()
@@ -20,7 +23,7 @@ const EachProgram = () => {
   useEffect(()=>{
     let getProgram = async()=>{
       try{
-        let res = await fetch(`http://localhost:8000/programs/${id}`, {
+        let res = await fetch(`http://localhost:8000/programs/${progId}`, {
           method:"GET",
           headers : {
             "Content-Type" : "application/json"
@@ -38,14 +41,9 @@ const EachProgram = () => {
         console.log(err)
       }
     }
-    getProgram()
-  }, [])
-
-
-   useEffect(()=>{
     let getTasks = async()=>{
       try{
-        let res = await fetch(`http://localhost:8000/tasks/getTasks/${id}`,{
+        let res = await fetch(`http://localhost:8000/tasks/getTasks/${progId}`,{
            method:"GET",
             headers : {
               "Content-Type" : "application/json"
@@ -64,8 +62,58 @@ const EachProgram = () => {
         console.log(err)
       }
     }
+    const fetchBalance = async()=>{
+            try{
+                const res = await fetch("http://localhost:8000/transactions/balance", {
+                    method : "GET",
+                    credentials : "include"
+                })
+                if(!res.ok){
+                    alert("failed to fetch balance")
+                }
+                else{
+                    const data = await res.json()
+                    setBalance(data.balance)
+                    setUserId(data.userId)
+                }
+            }catch(err){
+                console.log(err)
+            }
+        }
+
+    getProgram()
     getTasks()
-   }, [])
+    
+    fetchBalance()
+  }, [])
+
+
+  useEffect(()=>{
+      const getEnrolledProgs = async()=>{
+          try{
+              let res = await fetch(`http://localhost:8000/users/${userId}`, {
+                method:"GET",
+                credentials:"include"
+              })
+              if(!res.ok){
+                alert("couldn't fetch the user")
+              }else{
+                let data = await res.json()
+                setEnrolledProgs(data.user.enrolledPrograms)
+
+              }
+          }catch(err){
+            console.log(err)
+          }
+        } 
+
+        if(userId){
+            getEnrolledProgs()
+          }
+        
+  }, [userId])
+
+
 
    const deleteHandler = async(progid)=>{
     try{
@@ -84,6 +132,34 @@ const EachProgram = () => {
     }
    }
 
+
+   const enrollHandler = async()=>{
+    try{
+
+      if(balance == 0){
+        navigate("/users/topup")
+        return
+      }
+      let res = await fetch(`http://localhost:8000/users/enroll/${progId}`, {
+        method:"POST",
+        credentials:"include"
+      })
+      if(!res.ok){
+        alert("enrollment failed")
+      }
+      else{
+        setEnrolledProgs([...enrolledProgs, progId])
+      }
+    }catch(err){
+      console.log(err)
+    }
+   }
+
+
+   if (!program) {
+    return <div className="text-center text-xl mt-20 text-gray-700">Loading...</div>;
+  }
+
   return (
     <div>
       <div>
@@ -98,19 +174,21 @@ const EachProgram = () => {
                 <p className="text-lg text-blue-950 mt-2 text-[20px] block text-center">
                   {program.description}
                 </p>
-                <p className="text-md text-blue-950 mt-2 block text-center text-[25px] font-bold">Base Pay: Rs. 1500</p>
+                <p className="text-md text-blue-950 mt-2 block text-center text-[25px] font-bold">Base Pay: Rs. 5000</p>
                 <div className='flex justify-center items-center'>
                     {
                       role === "student" ? 
-                                <button className="mt-4 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:underline cursor-pointer" onClick={()=>(navigate("/users/topup"))}>
-                                    Enroll Now
+                                <button className={`mt-4 px-6 py-2 text-white font-bold rounded-lg  ${enrolledProgs?.map(id=>id.toString()).includes(progId) ? 'bg-green-500' : 'bg-blue-600 hover:underline cursor-pointer'}`} onClick={enrollHandler}>
+                                    {
+                                      enrolledProgs?.map(id => id.toString()).includes(progId) ? "Enrolled" :  "Enroll Now"
+                                    }
                                 </button>
                                 :
                                 <div className='flex gap-5 items-center'>
-                                  <button className="mt-4 px-6 py-2 bg-yellow-400 text-white font-bold rounded-lg hover:underline cursor-pointer" onClick={()=>(navigate(`/admin/updateprog/${id}`))} >
+                                  <button className="mt-4 px-6 py-2 bg-yellow-400 text-white font-bold rounded-lg hover:underline cursor-pointer" onClick={()=>(navigate(`/admin/updateprog/${progId}`))} >
                                     Update Program
                                   </button>
-                                  <button className="mt-4 px-6 py-2 bg-red-600 text-white font-bold rounded-lg hover:underline cursor-pointer" onClick={()=>(deleteHandler(id))}>
+                                  <button className="mt-4 px-6 py-2 bg-red-600 text-white font-bold rounded-lg hover:underline cursor-pointer" onClick={()=>(deleteHandler(progId))}>
                                     Delete Program
                                   </button>
                                 </div>
@@ -127,8 +205,8 @@ const EachProgram = () => {
                 {
                   tasks.length !== 0 ?
                      
-                      tasks.map((task)=>(
-                        <div className="border border-gray-200 rounded-lg p-5 mb-4 bg-white shadow-sm">
+                      tasks.map((task, idx)=>(
+                        <div className="border border-gray-200 rounded-lg p-5 mb-4 bg-white shadow-sm" key={idx}>
                             <h3 className="text-xl font-semibold text-blue-950">{task.title}</h3>
                             <p className="text-gray-600 mt-1">
                                 {task.description}

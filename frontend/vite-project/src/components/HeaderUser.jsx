@@ -55,6 +55,12 @@ const HeaderUser = () => {
     }
   }
 
+
+  const HomeHandler = ()=>{
+    logoutHandler()
+    navigate("/")
+  }
+
   return (
     <div className='bg-white w-full mt-4 mb-2 pl-10 pr-20'>
       <div className='flex items-center justify-between w-full'>
@@ -62,7 +68,7 @@ const HeaderUser = () => {
           <img src={logo} className='w-full h-full  rounded-full ' />
         </div>
         <ul className='flex justify-between items-center gap-10 shadow-2xl px-3 py-2'>
-          <li className=' text-[20px] font-bold text-blue-950 cursor-pointer hover:underline'><Link to="/">Home</Link></li>
+          <li className=' text-[20px] font-bold text-blue-950 cursor-pointer hover:underline' onClick={HomeHandler}>Home</li>
           <li className=' text-[20px] font-bold text-blue-950 cursor-pointer hover:underline'><Link to = {`/users/profile/${id}`}>Profile</Link></li>
           <li className=' text-[20px] font-bold text-blue-950 cursor-pointer hover:underline'><Link to='/users/programs'>Programs</Link></li>
           <li ><button className=' text-[20px] font-bold text-blue-950 cursor-pointer hover:underline' onClick={logoutHandler}>Logout</button></li>
