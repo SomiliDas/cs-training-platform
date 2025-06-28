@@ -2,6 +2,7 @@ import React from 'react'
 import HeaderAdmin from '../components/HeaderAdmin'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 export default function PendingApprovals() {
     const [subs, setSubs] = useState([])
@@ -13,7 +14,7 @@ export default function PendingApprovals() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    alert("failed to get pending approvals")
+                    toast.error("failed to get pending approvals")
                 }
                 else{
                     const data = await res.json()
@@ -34,10 +35,11 @@ export default function PendingApprovals() {
                 credentials:"include"
             })
             if(!res.ok){
-                alert("failed to accept")
+                toast.error("Approval failed")
             }else{
                 const data = await res.json()
                 setSubs(subs.filter((sub)=>(sub._id !== data.submission._id)))
+                toast.error("Approval Succesfull")
             }
         }catch(err){
             console.log(err)
@@ -51,11 +53,12 @@ export default function PendingApprovals() {
                 credentials : "include"
             })
             if(!res.ok){
-                alert("failed to reject")
+                toast.error("Rejection Failed")
             }
             else{
                 const data = await res.json()
                 setSubs(subs.filter((sub)=>(sub._id !== data.submission._id)))
+                toast.success("Rejection Successful")
             }
         }catch(err){
             console.log(err)

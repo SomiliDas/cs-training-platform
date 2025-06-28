@@ -2,6 +2,7 @@
 import HeaderAdmin from '../components/HeaderAdmin'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 
 function GetAllStudents() {
@@ -19,7 +20,7 @@ function GetAllStudents() {
                     redirect : "follow"
                 })
                 if(!res.ok){
-                    alert("cant get students rn")
+                    toast.error("something went wrong")
                 }
                 else{
                     let data = await res.json()
@@ -43,12 +44,13 @@ function GetAllStudents() {
             
         })
         if(!res.ok){
-            alert("failed to delete")
+            toast.error("deletion failed")
         }
         else{
            let prevUsers = [...users]
            let newUsers = prevUsers.filter((user)=>(user._id !== id))
            setUsers(newUsers)
+           toast.success("deletion successful")
            
         }
     }

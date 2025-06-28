@@ -1,5 +1,6 @@
 import React from "react"
 import { useState } from "react"
+import { toast } from "react-toastify"
 
 
 
@@ -25,10 +26,11 @@ function SignUp() {
       })
       const data = await res.json()
       if(res.ok && data.userId){
+        toast.success("account created")
         window.location.href = `/users/profile/${data.userId}`
       }
       else{
-        alert(data.message || "registration failed")
+        toast.error("something went wrong")
       }
 
     } catch (err){

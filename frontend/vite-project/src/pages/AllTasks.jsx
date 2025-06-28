@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import HeaderAdmin from '../components/HeaderAdmin'
+import { toast } from 'react-toastify'
 
 export default function AllTasks() {
 
@@ -12,7 +13,7 @@ export default function AllTasks() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    alert("failed to fetch tasks")
+                    toast.error("No tasks created")
                 }
                 else{
                     let data = await res.json()

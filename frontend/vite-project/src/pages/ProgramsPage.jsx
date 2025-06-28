@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import HeaderUser from '../components/HeaderUser'
 import getUserRoleFromCookie from '../services/getCookies'
 import HeaderAdmin from '../components/HeaderAdmin'
+import { toast } from 'react-toastify'
 
 export default function ProgramsPage() {
 
@@ -21,7 +22,7 @@ export default function ProgramsPage() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    alert("something went wrong")
+                    toast.error("something went wrong")
                 }
                 else{
                     let data = await res.json()
@@ -44,7 +45,7 @@ export default function ProgramsPage() {
 
   let moreInfoFunc = (id)=>{
     if(!role || role== null || role == ""){
-      alert("Login!")
+      toast.error("Login First!")
     }
     else{
       navigate(`/users/program/${id}`)
@@ -69,6 +70,8 @@ export default function ProgramsPage() {
       <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-20">
        
         {
+          programs.length === 0 ? <p className="col-span-full text-center text-xl text-gray-500">No Programs Created</p>
+          :
           programs.map((program)=>(
             <div className="bg-white rounded-xl shadow-md overflow-hidden">
               <img

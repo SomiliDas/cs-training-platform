@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import HeaderUser from '../components/HeaderUser'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function AttemptTaskPage() {
 
@@ -20,7 +21,7 @@ export default function AttemptTaskPage() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    // alert("failed to fetch tasks")
+                    toast.error("something went wrong")
                 }
                 else{
                     let data = await res.json()
@@ -42,7 +43,7 @@ export default function AttemptTaskPage() {
                     credentials:"include"
                 })
                 if(!d_res.ok){
-                    alert("Insufficient Balance")
+                    toast.error("Insufficient Balance")
                     navigate("/users/topup")
                     return
                 }else{
@@ -57,7 +58,7 @@ export default function AttemptTaskPage() {
                     credentials:"include"
                 })
                 if(!s_res.ok){
-                    alert("Already Submitted")
+                    toast.error("Already Submitted")
                     return
                 }
                 else{
@@ -73,7 +74,7 @@ export default function AttemptTaskPage() {
                 body : JSON.stringify({status})
             })
             if(!res.ok){
-                alert("failed to accept/complete task")
+                toast.error("failed to accept/complete task")
             }
             else{
                 let data = await res.json()

@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from "../assets/logo.jpg"
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const HeaderAdmin = () => {
 
@@ -18,9 +19,10 @@ const HeaderAdmin = () => {
         redirect : "follow"
       })
       if(!res.ok){
-        alert("something went wrong")
+        toast.error("LogOut Failed")
       }
       else{
+        toast.success("LogOut Successful")
         navigate("/")
       }
     }catch(err){
@@ -37,6 +39,7 @@ const HeaderAdmin = () => {
 
   return (
     <div className='bg-white w-full mt-4 mb-2 pl-10 pr-20'>
+      
       <div className='flex items-center justify-between w-full'>
         <div className='w-[80px] h-[80px] rounded-full ml-5'>
           <img src={logo} className='w-full h-full  rounded-full ' />

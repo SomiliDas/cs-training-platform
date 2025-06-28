@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 function Login() {
   
@@ -29,7 +30,7 @@ function Login() {
       }
     } else {
       
-      alert(data.message || "Login failed");
+      toast.error("something went wrong")
     }
     } catch (error) {
       console.error("Login error:", error)

@@ -2,6 +2,7 @@ import React from 'react'
 import HeaderUser from '../components/HeaderUser'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 export default function TopUpPage() {
 
@@ -17,7 +18,7 @@ export default function TopUpPage() {
                     credentials : "include"
                 })
                 if(!res.ok){
-                    alert("failed to fetch balance")
+                   toast.error("failed to fetch balance")
                 }
                 else{
                     const data = await res.json()
@@ -57,12 +58,13 @@ export default function TopUpPage() {
           }
           
         if(!res.ok){
-          alert("insufficient amount")
+          toast.error("Insufficient amount. Payment Failed")
         }
         else{
           let data = await res.json()
           setBalance(data.balance)
           setAmount("")
+          toast.success("Payment Successfull")
         }
       }catch(err){
         console.log(err)

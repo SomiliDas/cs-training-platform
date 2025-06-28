@@ -2,6 +2,7 @@ import React from 'react'
 import {useState } from 'react'
 import HeaderAdmin from '../components/HeaderAdmin'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function CreateProgram() {
 
@@ -26,9 +27,10 @@ export default function CreateProgram() {
                 credentials : "include"
             })
             if(!res.ok){
-                alert("failed to create program")
+                toast.error("failed to create program")
             }
             else{
+                toast.success("program created")
                 navigate("/programs")
             }
         }catch(err){

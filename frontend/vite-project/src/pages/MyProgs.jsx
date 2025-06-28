@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import HeaderUser from '../components/HeaderUser'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function MyProgs() {
 
@@ -15,7 +16,7 @@ export default function MyProgs() {
                         credentials:"include"
                     })
                     if(!res.ok){
-                        alert("failed to get programs")
+                        toast.error("failed to get programs")
                     }
                     else{
                         let data = await res.json()
@@ -40,6 +41,10 @@ export default function MyProgs() {
             <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-20 mt-10">
        
                 {
+                    programs.length === 0 ? <p className="col-span-full text-center text-xl text-gray-500">You are not enrolled in any programs.</p>
+
+                    :
+
                 programs.map((program)=>(
                     <div className="bg-white rounded-xl shadow-md overflow-hidden">
                     <img

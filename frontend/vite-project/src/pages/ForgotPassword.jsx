@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function ForgotPassword() {
 
@@ -28,9 +29,10 @@ export default function ForgotPassword() {
                 credentials:"include"
             })
             if(!res.ok){
-                alert("something went wrong")
+                toast.error("something went wrong")
             }
             else{
+                toast.success("Password Changed Successfully")
                 navigate("/auth")
             }
         }catch(err){

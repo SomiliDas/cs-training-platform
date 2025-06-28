@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import {useState } from 'react'
 import HeaderAdmin from '../components/HeaderAdmin'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function UpdateProg() {
 
@@ -22,7 +23,7 @@ export default function UpdateProg() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    alert("failed to fetch data")
+                    toast.error("something went wrong")
                 }
                 else{
                     let data = await res.json()
@@ -52,9 +53,10 @@ export default function UpdateProg() {
                 body : formData
             })
             if(!res.ok){
-                alert("failed to update")
+                toast.error("Updation Failed")
             }
             else{
+                toast.success("Updation Successful")
                 navigate("/programs")
             }
        }catch(err){

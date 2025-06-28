@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import HeaderAdmin from '../components/HeaderAdmin'
+import { toast } from 'react-toastify'
 
 export default function TasksDashboard() {
 
@@ -26,7 +27,7 @@ export default function TasksDashboard() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    alert("something went wrong")
+                    toast.error("something went wrong")
                 }
                 else{
                     let data = await res.json()
@@ -51,7 +52,7 @@ export default function TasksDashboard() {
           credentials:"include"
         })
         if(!res.ok){
-          alert("failed")
+          toast.error("something went wrong")
         }
         else{
           let data = await res.json()
@@ -67,31 +68,34 @@ export default function TasksDashboard() {
 
 
     let taskHandler = async(e)=>{
-
+        e.preventDefault()
+    try{
         if(isEditMode){
-            let res = await fetch(`http://localhost:8000/tasks/update/${editTaskId}`, {
-                        method:"PUT",
-                        headers : {
-                            "Content-Type" : "application/json"
-                        },
-                        body : JSON.stringify({title, description, cost, progId}),
-                        credentials: "include"
-                    })
-                    if(!res.ok){
-                        alert("deletion failed")
-                    }
-                    else{
-                        let data = await res.json()
-                        let updatedTasks = tasks.map((t) =>
-                            t._id === editTaskId ? data.updatedTask : t
-                        );
 
-                        setTasks(updatedTasks);
-                    }
+                let res = await fetch(`http://localhost:8000/tasks/update/${editTaskId}`, {
+                            method:"PUT",
+                            headers : {
+                                "Content-Type" : "application/json"
+                            },
+                            body : JSON.stringify({title, description, cost, progId}),
+                            credentials: "include"
+                        })
+                        if(!res.ok){
+                            toast.error("Updation failed")
+                        }
+                        else{
+                            let data = await res.json()
+                            let updatedTasks = tasks.map((t) =>
+                                t._id === editTaskId ? data.updatedTask : t
+                            )
+
+                            setTasks(updatedTasks)
+                            toast.success("Updation Successful")
+                        }
         }
 
-        e.preventDefault()
-        try{
+        
+        
             let res = await fetch(`http://localhost:8000/tasks/create/${progId}`, {
                 method:"POST",
                 headers:{
@@ -101,7 +105,7 @@ export default function TasksDashboard() {
                 credentials : "include"
             })
             if(!res.ok){
-                alert("failed to create task")
+                toast.error("creation failed")
             }
             else{
                 let data = await res.json()
@@ -112,10 +116,11 @@ export default function TasksDashboard() {
                 setDescription("")
                 setProgId("")
                 setCost("")
+                toast.success("creation successful")
             }
-        }catch(err){
-            console.log(err)
-        }
+    }catch(err){
+         console.log(err)
+    }
     }
 
 
@@ -129,13 +134,13 @@ export default function TasksDashboard() {
                 credentials : "include"
             })
             if(!res.ok){
-                alert("delete failed")
+                toast.error("deletion failed")
             }
             else{
                 let prevTasks = [...tasks]
                 let newTasks = prevTasks.filter((task)=>(task._id !== id))
                 setTasks(newTasks)
-
+                toast.success("Deletion Successful")
             }
         }catch(err){
             console.log(err)
@@ -155,7 +160,7 @@ export default function TasksDashboard() {
                     
                 })
                 if(!res.ok){
-                     console.log("failed to fetch task")
+                     toast.error("something went wrong")
                 }
                 else{
                     let data = await res.json()

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import HeaderAdmin from '../components/HeaderAdmin';
+import { toast } from 'react-toastify';
 
 const COLORS = ["#00C49F", "#FFBB28"];
 
@@ -17,7 +18,7 @@ export default function StudentProgressPage() {
                     credentials : "include"
                 })
                 if(!res.ok){
-                    alert("failed to fetch data")
+                    toast.error("something went wrong")
                 }
                 else{
                     let data = await res.json()

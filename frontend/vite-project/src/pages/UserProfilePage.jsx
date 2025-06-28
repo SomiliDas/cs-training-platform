@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import HeaderUser from '../components/HeaderUser'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const UserProilePage = () => {
     let[user, setUser] = useState()
@@ -19,7 +20,7 @@ const UserProilePage = () => {
                 redirect : 'follow'
             })
             if(!res.ok){
-                alert("something went wrong")
+                toast.error("something went wrong")
             }
             else{
                 const data = await res.json()
@@ -50,7 +51,7 @@ const UserProilePage = () => {
     }
 
     const progHandler = ()=>{
-        user.enrolledPrograms.length !== 0 ? navigate(`/users/myProgs`) : alert("Not enrolled In Any Program Yet")
+        user.enrolledPrograms.length !== 0 ? navigate(`/users/myProgs`) : toast.error("Not enrolled In Any Program Yet")
     }
 
   return (

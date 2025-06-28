@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import profilePic from '../assets/profilepic.jpg'
 import HeaderAdmin from '../components/HeaderAdmin'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function AdminDashboard() {
     let navigate = useNavigate()
@@ -17,7 +18,7 @@ export default function AdminDashboard() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    alert("failed to fetch programs")
+                    toast.error("No programs created yet")
                 }
                 else{
                     let data = await res.json()
@@ -35,7 +36,7 @@ export default function AdminDashboard() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    alert("failed to fetch students")
+                    toast.error("No Students Found")
                 }
                 else{
                     let data = await res.json()
@@ -53,7 +54,7 @@ export default function AdminDashboard() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    alert("failed to fetch tasks")
+                    toast.error("No tasks created")
                 }
                 else{
                     let data = await res.json()
@@ -73,7 +74,7 @@ export default function AdminDashboard() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    alert("failed to get pending approvals")
+                    toast.error("something went wrong")
                 }
                 else{
                     const data = await res.json()

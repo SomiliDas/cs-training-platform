@@ -2,6 +2,7 @@ import React from 'react'
 import HeaderUser from '../components/HeaderUser'
 import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
 import { useEffect, useState } from "react"
+import { toast } from 'react-toastify'
 
 function ProgressTracker() {
 
@@ -24,7 +25,7 @@ function ProgressTracker() {
           credentials:"include"
         })
         if(!p_res.ok){
-          alert("something went wrong")
+          toast.error("something went wrong")
         }
         else{
           let data = await p_res.json()
@@ -44,7 +45,7 @@ function ProgressTracker() {
           credentials:"include"
         })
         if(!a_res.ok){
-          alert("something went wrong")
+          toast.error("something went wrong")
         }
         else{
           let data = await a_res.json()
@@ -65,7 +66,7 @@ function ProgressTracker() {
           credentials:"include"
         })
         if(!r_res.ok){
-          alert("something went wrong")
+          toast.error("something went wrong")
         }
         else{
           let data = await r_res.json()

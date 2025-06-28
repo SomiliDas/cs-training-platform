@@ -1,6 +1,7 @@
 
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import './App.css'
+import { ToastContainer} from 'react-toastify'
 import AdminDashboard from './pages/AdminDashboard'
 import AttemptTaskPage from './pages/AttemptTaskPage'
 import AuthPage from './pages/AuthPage'
@@ -67,6 +68,7 @@ function App() {
 
   return (
     <>
+      <ToastContainer/>
       <RouterProvider router={router} />
     </>
   )

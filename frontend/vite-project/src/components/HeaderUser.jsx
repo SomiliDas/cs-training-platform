@@ -3,6 +3,7 @@ import logo from "../assets/logo.jpg"
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 const HeaderUser = () => {
 
   let navigate = useNavigate()
@@ -21,7 +22,7 @@ const HeaderUser = () => {
           credentials : "include"
         })
         if(!res.ok){
-          alert("something went wrong")
+          toast.error("something went wrong")
         }
         else{
           const data = await res.json()
@@ -45,9 +46,10 @@ const HeaderUser = () => {
         redirect : "follow"
       })
       if(!res.ok){
-        alert("something went wrong")
+        toast.error("something went wrong")
       }
       else{
+        toast.success("Logout succesful")
         navigate("/")
       }
     }catch(err){

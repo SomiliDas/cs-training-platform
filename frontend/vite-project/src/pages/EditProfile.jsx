@@ -3,6 +3,7 @@ import HeaderUser from '../components/HeaderUser'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const EditProfile = () => {
 
@@ -40,10 +41,10 @@ const EditProfile = () => {
             })
 
             if(!res.ok){
-                alert("update failed")
+                toast.error("updation failed")
             }
             else{
-                console.log(res)
+                toast.success("updated successfully")
                 navigate(`/users/profile/${id}`)
             }
         }catch(err){

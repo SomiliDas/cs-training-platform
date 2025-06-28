@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import HeaderUser from '../components/HeaderUser'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 export default function WalletPage() {
 
@@ -19,7 +20,7 @@ export default function WalletPage() {
                     credentials : "include"
                 })
                 if(!res.ok){
-                    alert("failed to fetch balance")
+                    toast.error("something went wrong")
                 }
                 else{
                     const data = await res.json()
@@ -38,7 +39,7 @@ export default function WalletPage() {
                     credentials:"include"
                 })
                 if(!res.ok){
-                    alert("failed to get history")
+                    toast.error("something went wrong")
                 }else{
                     let data = await res.json()
                     setTransactions(data.transactions)

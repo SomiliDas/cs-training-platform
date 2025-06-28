@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import HeaderUser from '../components/HeaderUser'
 import getUserRoleFromCookie from '../services/getCookies'
 import HeaderAdmin from '../components/HeaderAdmin'
+import { toast } from 'react-toastify'
 
 const EachProgram = () => {
   const navigate = useNavigate()
@@ -31,7 +32,7 @@ const EachProgram = () => {
           credentials:"include"
         })
         if(!res.ok){
-          alert("failed")
+          toast.error("No program found")
         }
         else{
           let data = await res.json()
@@ -51,7 +52,7 @@ const EachProgram = () => {
             credentials:"include"
         })
         if(!res.ok){
-          console.log("failed to get tasks")
+          toast.error("No tasks found")
         }
         else{
           let data = await res.json()
@@ -69,7 +70,7 @@ const EachProgram = () => {
                     credentials : "include"
                 })
                 if(!res.ok){
-                    alert("failed to fetch balance")
+                    toast.error('something went wrong')
                 }
                 else{
                     const data = await res.json()
@@ -96,7 +97,7 @@ const EachProgram = () => {
                 credentials:"include"
               })
               if(!res.ok){
-                alert("couldn't fetch the user")
+                toast.error("something went wrong")
               }else{
                 let data = await res.json()
                 setEnrolledProgs(data.user.enrolledPrograms)
@@ -122,9 +123,10 @@ const EachProgram = () => {
         credentials:"include"
       })
       if(!res.ok){
-        alert("failed to delete")
+        toast.error("deletion failed")
       }
       else{
+        toast.success("deleted successfully")
         navigate("/programs")
       }
     }catch(err){
@@ -145,10 +147,12 @@ const EachProgram = () => {
         credentials:"include"
       })
       if(!res.ok){
-        alert("enrollment failed")
+        toast.error("enrollment failed")
       }
       else{
+        
         setEnrolledProgs([...enrolledProgs, progId])
+        toast.success("Enrolled successfully")
       }
     }catch(err){
       console.log(err)
