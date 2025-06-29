@@ -13,7 +13,7 @@ export default function TopUpPage() {
     useEffect(()=>{
         const fetchBalance = async()=>{
             try{
-                const res = await fetch("http://localhost:8000/transactions/balance", {
+                const res = await fetch("https://flight-training-platform-backend.onrender.com/transactions/balance", {
                     method : "GET",
                     credentials : "include"
                 })
@@ -37,7 +37,7 @@ export default function TopUpPage() {
       try{
           let res
           if(balance === 0){
-                  res = await fetch("http://localhost:8000/transactions/basepay",{
+                  res = await fetch("https://flight-training-platform-backend.onrender.com/transactions/basepay",{
                   method:"POST",
                   headers:{
                     "Content-Type" :"application/json"
@@ -47,7 +47,7 @@ export default function TopUpPage() {
                 })
           }
           else{
-            res = await fetch("http://localhost:8000/transactions/topup",{
+            res = await fetch("https://flight-training-platform-backend.onrender.com/transactions/topup",{
                   method:"POST",
                   headers:{
                     "Content-Type" :"application/json"
