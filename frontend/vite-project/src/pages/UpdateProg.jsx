@@ -18,7 +18,7 @@ export default function UpdateProg() {
         const fetchProg = async()=>{
             try{
                 
-                let res = await fetch(`http://localhost:8000/api/programs/${progId}`, {
+                let res = await fetch(`/api/programs/${progId}`, {
                     method:"GET",
                     credentials:"include"
                 })
@@ -47,7 +47,7 @@ export default function UpdateProg() {
         formData.append("description", description)
         formData.append("programPic", programPic)
         try{
-            let res = await fetch(`http://localhost:8000/api/programs/update/${progId}`, {
+            let res = await fetch(`/api/programs/update/${progId}`, {
                 method:"PUT",
                 credentials :"include",
                 body : formData

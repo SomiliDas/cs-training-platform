@@ -11,7 +11,7 @@ const UserProilePage = () => {
     const studentId = useParams().id
     useEffect(()=>{
        const fetchUser = async ()=>{ try{
-            const res = await fetch(`http://localhost:8000/api/users/profile/${studentId}`, {
+            const res = await fetch(`/api/users/profile/${studentId}`, {
                 method : "GET",
                 headers : {
                     "Content-Type" : "application/json"
@@ -61,7 +61,7 @@ const UserProilePage = () => {
             <button className=' block ml-150 px-4 py-1 bg-blue-600 rounded-lg text-white font-semibold cursor-pointer hover:underline' onClick={()=>(navigate(`/users/edit/${studentId}`, {state : {ename : user.name, eemail : user.email}}))}>Edit Profile</button>
             <div className=' mt-5 flex justify-center items-center'>
                 <div className='h-[150px] w-[150px] rounded-full'>
-                    <img src={`http://localhost:8000/images/${user.profilePic}`} className='h-full w-full object-cover border-1 border-gray-300 rounded-full'/>
+                    <img src={`/images/${user.profilePic}`} className='h-full w-full object-cover border-1 border-gray-300 rounded-full'/>
                 </div>
             </div>
                 <p className='text-[45px] text-blue-950 font-extrabold mb-1'>{user.name}</p>

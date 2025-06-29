@@ -11,7 +11,7 @@ function GetAllStudents() {
     useEffect(()=>{
         const getAllUsers = async()=>{
             try{
-                const res = await fetch("http://localhost:8000/api/users/admins/getUsers", {
+                const res = await fetch("/api/users/admins/getUsers", {
                     method:"GET",
                     headers :{
                         "Content-Type": "application/json"
@@ -38,7 +38,7 @@ function GetAllStudents() {
     },[])
 
     const handleDelete = async(id)=>{
-        let res = await fetch(`http://localhost:8000/api/users/admins/users/${id}`,{
+        let res = await fetch(`/api/users/admins/users/${id}`,{
             method : "DELETE",
             credentials : "include"
             

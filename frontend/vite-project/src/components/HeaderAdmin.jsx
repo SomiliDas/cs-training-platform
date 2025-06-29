@@ -10,7 +10,7 @@ const HeaderAdmin = () => {
 
   const logoutHandler = async()=>{
     try{
-      const res = await fetch("http://localhost:8000/api/users/logout", {
+      const res = await fetch("/api/users/logout", {
         method : "GET",
         headers : {
           "Content-Type" : "application/json"

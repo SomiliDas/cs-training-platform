@@ -9,7 +9,7 @@ export default function PendingApprovals() {
     useEffect(()=>{
         const getPendingApprovals = async ()=>{
             try{
-                const res = await fetch("http://localhost:8000/api/submissions/pending", {
+                const res = await fetch("/api/submissions/pending", {
                     method:"GET",
                     credentials:"include"
                 })
@@ -30,7 +30,7 @@ export default function PendingApprovals() {
 
     const acceptHandler = async(studentId , taskId)=>{
         try{
-            const res = await fetch(`http://localhost:8000/api/submissions/approve/${studentId}/${taskId}`, {
+            const res = await fetch(`/api/submissions/approve/${studentId}/${taskId}`, {
                 method:"PUT",
                 credentials:"include"
             })
@@ -48,7 +48,7 @@ export default function PendingApprovals() {
 
     const rejectHandler = async(studentId, taskId)=>{
         try{
-            const res = await fetch(`http://localhost:8000/api/submissions/reject/${studentId}/${taskId}`, {
+            const res = await fetch(`/api/submissions/reject/${studentId}/${taskId}`, {
                 method: "PUT",
                 credentials : "include"
             })

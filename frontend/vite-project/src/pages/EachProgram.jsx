@@ -24,7 +24,7 @@ const EachProgram = () => {
   useEffect(()=>{
     let getProgram = async()=>{
       try{
-        let res = await fetch(`http://localhost:8000/api/programs/${progId}`, {
+        let res = await fetch(`/api/programs/${progId}`, {
           method:"GET",
           headers : {
             "Content-Type" : "application/json"
@@ -44,7 +44,7 @@ const EachProgram = () => {
     }
     let getTasks = async()=>{
       try{
-        let res = await fetch(`http://localhost:8000/api/tasks/getTasks/${progId}`,{
+        let res = await fetch(`/api/tasks/getTasks/${progId}`,{
            method:"GET",
             headers : {
               "Content-Type" : "application/json"
@@ -65,7 +65,7 @@ const EachProgram = () => {
     }
     const fetchBalance = async()=>{
             try{
-                const res = await fetch("http://localhost:8000/api/transactions/balance", {
+                const res = await fetch("/api/transactions/balance", {
                     method : "GET",
                     credentials : "include"
                 })
@@ -92,7 +92,7 @@ const EachProgram = () => {
   useEffect(()=>{
       const getEnrolledProgs = async()=>{
           try{
-              let res = await fetch(`http://localhost:8000/api/users/${userId}`, {
+              let res = await fetch(`/api/users/${userId}`, {
                 method:"GET",
                 credentials:"include"
               })
@@ -118,7 +118,7 @@ const EachProgram = () => {
 
    const deleteHandler = async(progid)=>{
     try{
-      let res = await fetch(`http://localhost:8000/api/programs/delete/${progid}`, {
+      let res = await fetch(`/api/programs/delete/${progid}`, {
         method:"DELETE",
         credentials:"include"
       })
@@ -143,7 +143,7 @@ const EachProgram = () => {
         navigate("/users/topup")
         return
       }
-      let res = await fetch(`http://localhost:8000/api/users/enroll/${progId}`, {
+      let res = await fetch(`/users/enroll/${progId}`, {
         method:"POST",
         credentials:"include"
       })

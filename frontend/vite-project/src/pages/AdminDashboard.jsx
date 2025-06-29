@@ -13,7 +13,7 @@ export default function AdminDashboard() {
     useEffect(()=>{
         const getTotalPrograms = async()=>{
             try{
-                let res = await fetch("http://localhost:8000/api/programs/getPrograms", {
+                let res = await fetch("/api/programs/getPrograms", {
                     method:"GET",
                     credentials:"include"
                 })
@@ -31,7 +31,7 @@ export default function AdminDashboard() {
         }
         let getTotalStudents = async()=>{
             try{
-                let res = await fetch("http://localhost:8000/api/users/admins/getUsers", {
+                let res = await fetch("/api/users/admins/getUsers", {
                     method:"GET",
                     credentials:"include"
                 })
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
 
         const getTotalTasks = async()=>{
             try{
-                let res = await fetch("http://localhost:8000/api/tasks/allTasks", {
+                let res = await fetch("/api/tasks/allTasks", {
                     method:"GET",
                     credentials:"include"
                 })
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
 
         const getPendingApprovals = async ()=>{
             try{
-                const res = await fetch("http://localhost:8000/api/submissions/pending", {
+                const res = await fetch("/api/submissions/pending", {
                     method:"GET",
                     credentials:"include"
                 })

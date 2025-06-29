@@ -14,7 +14,7 @@ export default function ProgramsPage() {
   useEffect(()=>{
     let getPrograms = async()=>{
             try{
-                let res = await fetch(`http://localhost:8000/api/programs/getPrograms`, {
+                let res = await fetch(`/api/programs/getPrograms`, {
                     method:"GET",
                     headers:{
                         "Content-Type": "application/json"
@@ -75,7 +75,7 @@ export default function ProgramsPage() {
           programs.map((program)=>(
             <div className="bg-white rounded-xl shadow-md overflow-hidden">
               <img
-                src={`http://localhost:8000/images/${program.programPic}`}
+                src={`/images/${program.programPic}`}
                 alt={program.title}
                 className="w-full h-48"
               />
