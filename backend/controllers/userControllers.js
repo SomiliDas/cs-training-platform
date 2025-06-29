@@ -13,7 +13,7 @@ const registerUser = async (req, res)=>{
     let {name, email, password, dob} = req.body
     let user = await userModel.findOne({email})
     if(user){
-        return res.status(400).redirect("/users/login")
+        return res.status(400).json({message : "Please Login"})
     }
     else{
         try{

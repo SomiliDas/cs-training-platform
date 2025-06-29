@@ -14,7 +14,7 @@ export default function ProgramsPage() {
   useEffect(()=>{
     let getPrograms = async()=>{
             try{
-                let res = await fetch(`http://localhost:8000/programs/getPrograms`, {
+                let res = await fetch(`http://localhost:8000/api/programs/getPrograms`, {
                     method:"GET",
                     headers:{
                         "Content-Type": "application/json"

@@ -13,7 +13,7 @@ const HeaderUser = () => {
   useEffect(()=>{
     const fetchId = async()=>{
       try{
-        const res = await fetch("http://localhost:8000/users/getId", {
+        const res = await fetch("http://localhost:8000/api/users/getId", {
           method : "GET",
           headers : {
             "Content-Type" : "application/json"
@@ -37,7 +37,7 @@ const HeaderUser = () => {
 
   const logoutHandler = async()=>{
     try{
-      const res = await fetch("http://localhost:8000/users/logout", {
+      const res = await fetch("http://localhost:8000/api/users/logout", {
         method : "GET",
         headers : {
           "Content-Type" : "application/json"

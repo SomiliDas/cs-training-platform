@@ -20,7 +20,7 @@ export default function ForgotPassword() {
                 alert("Passwords don't match")
                 return
             }
-            let res = await fetch("http://localhost:8000/users/forgotPass",{
+            let res = await fetch("http://localhost:8000/api/users/forgotPass",{
                 method:"PUT",
                 headers:{
                     "Content-Type" :"application/json"

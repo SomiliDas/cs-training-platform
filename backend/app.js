@@ -3,6 +3,7 @@ const app = express()
 require("dotenv").config()
 const path = require("path")
 
+
 const dbConnection = require("./config/dbConnection")
 const cors = require('cors')
 const allowedOrigins = [
@@ -19,6 +20,7 @@ app.use(cors({
   },
   credentials: true
 }));
+
 
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
@@ -39,11 +41,16 @@ app.use(cookieParser())
 
 
 
-app.use("/users", userRoutes)
-app.use("/programs", programRoutes)
-app.use("/tasks", taskRoutes)
-app.use("/transactions", transactionRoutes)
-app.use("/progress", progressRoutes)
-app.use("/submissions", submissionRoutes)
+app.use("/api/users", userRoutes)
+app.use("/api/programs", programRoutes)
+app.use("/api/tasks", taskRoutes)
+app.use("/api/transactions", transactionRoutes)
+app.use("/api/progress", progressRoutes)
+app.use("/api/submissions", submissionRoutes)
+
+app.use(express.static(path.join(__dirname, "..", "frontend", "vite-project", "dist")));
+app.get(/^\/(?!api|users|programs|tasks|transactions|progress|submissions|uploads).*/, (req, res) => {
+  res.sendFile(path.resolve(__dirname, "..", "frontend", "vite-project", "dist", "index.html"));
+});
 
 app.listen(process.env.PORT || 8000)

@@ -15,7 +15,7 @@ export default function WalletPage() {
     useEffect(()=>{
         const fetchBalance = async()=>{
             try{
-                const res = await fetch("http://localhost:8000/transactions/balance", {
+                const res = await fetch("http://localhost:8000/api/transactions/balance", {
                     method : "GET",
                     credentials : "include"
                 })
@@ -34,7 +34,7 @@ export default function WalletPage() {
 
         const fetchTransHist = async()=>{
             try{
-                let res = await fetch("http://localhost:8000/transactions/history", {
+                let res = await fetch("http://localhost:8000/api/transactions/history", {
                     method:"GET",
                     credentials:"include"
                 })

@@ -1,33 +1,36 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 function Login() {
   
   let[email, setEmail] = useState("")
   let [password, setPassword] = useState("")
+  const navigate = useNavigate()
   
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-       const response = await fetch('http://localhost:8000/users/login', {
+       const response = await fetch('http://localhost:8000/api/users/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ email, password }),
       credentials: 'include',
-      redirect: 'follow' 
+      // redirect: 'follow' 
     });
 
     const data = await response.json();
     if (response.ok && data.userId) {
       if(data.role == "admin"){
-       window.location.href = `/admin`
+      //  window.location.href = `/admin`
+      navigate(`/admin`)
       }
       else{
         toast.success("login successful")
-         window.location.href = `/users/profile/${data.userId}`
+        //  window.location.href = `/users/profile/${data.userId}`
+        navigate(`/users/profile/${data.userId}`)
       }
     } else {
       

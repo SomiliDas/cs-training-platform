@@ -19,7 +19,7 @@ export default function TasksDashboard() {
     useEffect(()=>{
         let getPrograms = async()=>{
             try{
-                let res = await fetch(`http://localhost:8000/programs/getPrograms`, {
+                let res = await fetch(`http://localhost:8000/api/programs/getPrograms`, {
                     method:"GET",
                     headers:{
                         "Content-Type": "application/json"
@@ -44,7 +44,7 @@ export default function TasksDashboard() {
       useEffect(()=>{
     let getTasks = async ()=>{
       try{
-        let res = await fetch(`http://localhost:8000/tasks/allTasks`, {
+        let res = await fetch(`http://localhost:8000/api/tasks/allTasks`, {
           method:"GET",
           headers:{
             "Content-Type" : "application/json"
@@ -72,7 +72,7 @@ export default function TasksDashboard() {
     try{
         if(isEditMode){
 
-                let res = await fetch(`http://localhost:8000/tasks/update/${editTaskId}`, {
+                let res = await fetch(`http://localhost:8000/api/tasks/update/${editTaskId}`, {
                             method:"PUT",
                             headers : {
                                 "Content-Type" : "application/json"
@@ -97,7 +97,7 @@ export default function TasksDashboard() {
 
         
         
-            let res = await fetch(`http://localhost:8000/tasks/create/${progId}`, {
+            let res = await fetch(`http://localhost:8000/api/tasks/create/${progId}`, {
                 method:"POST",
                 headers:{
                     "Content-Type" : "application/json"
@@ -127,7 +127,7 @@ export default function TasksDashboard() {
 
     const handleDelete = async(id)=>{
         try{
-            let res = await fetch(`http://localhost:8000/tasks/delete/${id}`,{
+            let res = await fetch(`http://localhost:8000/api/tasks/delete/${id}`,{
                 method:"DELETE",
                 headers : {
                     "Content-Type" : "application/json"
@@ -151,7 +151,7 @@ export default function TasksDashboard() {
 
         const handleUpdate = async(id)=>{
             try{
-                let res = await fetch(`http://localhost:8000/tasks/${id}`,{
+                let res = await fetch(`http://localhost:8000/api/tasks/${id}`,{
                     method:"GET",
                     headers : {
                         "Content-Type" : "application/json",

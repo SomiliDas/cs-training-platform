@@ -1,5 +1,6 @@
 import React from "react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 
 
@@ -10,24 +11,27 @@ function SignUp() {
   let[email, setEmail] = useState("")
   let[password, setPassword] = useState("")
   let[dob, setDob] = useState("")
+  const navigate = useNavigate()
 
   let handleSignUp = async(e)=>{
     e.preventDefault()
     try{
 
-      const res = await fetch("http://localhost:8000/users/register", {
+      const res = await fetch("http://localhost:8000/api/users/register", {
         method : "POST",
         headers : {
            'Content-Type': 'application/json'
         },
         body : JSON.stringify({name, email, password, dob}),
         credentials : "include",
-        redirect : "follow"
+        // redirect : "follow"
       })
       const data = await res.json()
       if(res.ok && data.userId){
         toast.success("account created")
-        window.location.href = `/users/profile/${data.userId}`
+        navigate(`/users/profile/${data.userId}`)
+        
+        // window.location.href = `/users/profile/${data.userId}`
       }
       else{
         toast.error("something went wrong")

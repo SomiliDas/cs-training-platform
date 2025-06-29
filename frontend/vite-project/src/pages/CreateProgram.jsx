@@ -21,7 +21,7 @@ export default function CreateProgram() {
         formData.append("description", description)
         formData.append("programPic", programPic)
         try{
-            let res = await fetch("http://localhost:8000/programs/create", {
+            let res = await fetch("http://localhost:8000/api/programs/create", {
                 method:"POST",
                 body : formData,
                 credentials : "include"

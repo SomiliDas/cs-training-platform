@@ -5,7 +5,9 @@
   "main": "backend/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon backend/app"
+    "dev": "nodemon backend/app",
+    "build" : "npm install && npm install --prefix frontend/vite-project && npm run build --prefix frontend/vite-project",
+    "start" : "nodemon backend/app"
   },
   "keywords": [],
   "author": "",
