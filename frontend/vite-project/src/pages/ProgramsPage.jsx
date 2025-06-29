@@ -14,7 +14,7 @@ export default function ProgramsPage() {
   useEffect(()=>{
     let getPrograms = async()=>{
             try{
-                let res = await fetch(`https://flight-training-platform-backend.onrender.com/programs/getPrograms`, {
+                let res = await fetch(`https://flight-training-platform-backend-cors.onrender.com/programs/getPrograms`, {
                     method:"GET",
                     headers:{
                         "Content-Type": "application/json"
@@ -75,7 +75,7 @@ export default function ProgramsPage() {
           programs.map((program)=>(
             <div className="bg-white rounded-xl shadow-md overflow-hidden">
               <img
-                src={`https://flight-training-platform-backend.onrender.com/images/${program.programPic}`}
+                src={`https://flight-training-platform-backend-cors.onrender.com/images/${program.programPic}`}
                 alt={program.title}
                 className="w-full h-48"
               />
