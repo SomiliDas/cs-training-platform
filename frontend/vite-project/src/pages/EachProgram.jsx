@@ -24,7 +24,7 @@ const EachProgram = () => {
   useEffect(()=>{
     let getProgram = async()=>{
       try{
-        let res = await fetch(`https://flight-training-platform-backend.onrender.com/programs/${progId}`, {
+        let res = await fetch(`https://flight-training-platform-backend-cors.onrender.com/programs/${progId}`, {
           method:"GET",
           headers : {
             "Content-Type" : "application/json"
@@ -44,7 +44,7 @@ const EachProgram = () => {
     }
     let getTasks = async()=>{
       try{
-        let res = await fetch(`https://flight-training-platform-backend.onrender.com/tasks/getTasks/${progId}`,{
+        let res = await fetch(`https://flight-training-platform-backend-cors.onrender.com/tasks/getTasks/${progId}`,{
            method:"GET",
             headers : {
               "Content-Type" : "application/json"
@@ -65,7 +65,7 @@ const EachProgram = () => {
     }
     const fetchBalance = async()=>{
             try{
-                const res = await fetch("https://flight-training-platform-backend.onrender.com/transactions/balance", {
+                const res = await fetch("https://flight-training-platform-backend-cors.onrender.com/transactions/balance", {
                     method : "GET",
                     credentials : "include"
                 })
@@ -92,7 +92,7 @@ const EachProgram = () => {
   useEffect(()=>{
       const getEnrolledProgs = async()=>{
           try{
-              let res = await fetch(`https://flight-training-platform-backend.onrender.com/users/${userId}`, {
+              let res = await fetch(`https://flight-training-platform-backend-cors.onrender.com/users/${userId}`, {
                 method:"GET",
                 credentials:"include"
               })
@@ -118,7 +118,7 @@ const EachProgram = () => {
 
    const deleteHandler = async(progid)=>{
     try{
-      let res = await fetch(`https://flight-training-platform-backend.onrender.com/programs/delete/${progid}`, {
+      let res = await fetch(`https://flight-training-platform-backend-cors.onrender.com/programs/delete/${progid}`, {
         method:"DELETE",
         credentials:"include"
       })
@@ -143,7 +143,7 @@ const EachProgram = () => {
         navigate("/users/topup")
         return
       }
-      let res = await fetch(`https://flight-training-platform-backend.onrender.com/users/enroll/${progId}`, {
+      let res = await fetch(`https://flight-training-platform-backend-cors.onrender.com/users/enroll/${progId}`, {
         method:"POST",
         credentials:"include"
       })
