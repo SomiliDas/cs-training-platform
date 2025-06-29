@@ -27,6 +27,24 @@ Welcome to the **Flight Training Platform**, a full-featured web application des
 
 ---
 
+
+## 🔐 Credentials
+
+### Admin Login
+- **Email:** `admin@abc.com`
+- **Password:** `123`
+
+### Sample Student Logins
+| Email            | Password |
+|------------------|----------|
+| som@abc.com      | 123      |
+| saji@abc.com     | 123      |
+| shresh@abc.com   | 123      |
+| shibu@abc.com    | 123      |
+
+> You can also register new users through the signup flow.
+
+
 ## 👥 User Roles
 
 ### 🔐 Admin
