@@ -7,11 +7,12 @@ const path = require("path")
 const dbConnection = require("./config/dbConnection")
 const cors = require('cors')
 const allowedOrigins = [
-  'http://localhost:5173'
+  'http://localhost:5173',
+  'http://localhost:8000'
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
+  origin: function (origin, callback) { 
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
