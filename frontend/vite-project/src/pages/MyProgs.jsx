@@ -11,7 +11,7 @@ export default function MyProgs() {
       useEffect(()=>{
         let getPrograms = async()=>{
                 try{
-                    let res = await fetch(`http://localhost:8000/users/enrolledPrograms`, {
+                    let res = await fetch(`https://flight-training-platform-backend.onrender.com/users/enrolledPrograms`, {
                         method:"GET",
                         credentials:"include"
                     })
