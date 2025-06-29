@@ -5,10 +5,13 @@ const path = require("path")
 
 
 const dbConnection = require("./config/dbConnection")
+dbConnection();
+
 const cors = require('cors')
 const allowedOrigins = [
   'http://localhost:5173',
-  'http://localhost:8000'
+  'http://localhost:8000',
+  "https://flight-training-platform.onrender.com"
 ];
 
 app.use(cors({
@@ -50,8 +53,13 @@ app.use("/api/progress", progressRoutes)
 app.use("/api/submissions", submissionRoutes)
 
 app.use(express.static(path.join(__dirname, "..", "frontend", "vite-project", "dist")));
-app.get(/^\/(?!api|users|programs|tasks|transactions|progress|submissions|uploads).*/, (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "..", "frontend", "vite-project", "dist", "index.html"));
 });
 
-app.listen(process.env.PORT || 8000)
+
+const PORT = process.env.PORT || 8000
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
