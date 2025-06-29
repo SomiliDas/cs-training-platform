@@ -20,7 +20,7 @@ function ProgressTracker() {
   useEffect(()=>{
     const fetchPending = async()=>{
       try{
-        let p_res = await fetch(`http://localhost:8000/submissions/user/pending`, {
+        let p_res = await fetch(`https://flight-training-platform-backend.onrender.com/submissions/user/pending`, {
           method: "GET",
           credentials:"include"
         })
@@ -40,7 +40,7 @@ function ProgressTracker() {
 
     const fetchApproved = async()=>{
       try{
-        let a_res = await fetch(`http://localhost:8000/submissions/user/approved`, {
+        let a_res = await fetch(`https://flight-training-platform-backend.onrender.com/submissions/user/approved`, {
           method: "GET",
           credentials:"include"
         })
@@ -61,7 +61,7 @@ function ProgressTracker() {
 
     const fetchRejected = async()=>{
       try{
-        let r_res = await fetch(`http://localhost:8000/submissions/user/rejected`, {
+        let r_res = await fetch(`https://flight-training-platform-backend.onrender.com/submissions/user/rejected`, {
           method: "GET",
           credentials:"include"
         })
