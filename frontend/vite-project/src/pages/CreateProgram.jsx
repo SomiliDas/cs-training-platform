@@ -21,7 +21,7 @@ export default function CreateProgram() {
         formData.append("description", description)
         formData.append("programPic", programPic)
         try{
-            let res = await fetch("https://flight-training-platform-backend.onrender.com/programs/create", {
+            let res = await fetch("https://flight-training-platform-backend-cors.onrender.com/programs/create", {
                 method:"POST",
                 body : formData,
                 credentials : "include"
