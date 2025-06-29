@@ -20,7 +20,7 @@ export default function ForgotPassword() {
                 alert("Passwords don't match")
                 return
             }
-            let res = await fetch("https://flight-training-platform-backend.onrender.com/users/forgotPass",{
+            let res = await fetch("https://flight-training-platform-backend-cors.onrender.com/users/forgotPass",{
                 method:"PUT",
                 headers:{
                     "Content-Type" :"application/json"
