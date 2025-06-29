@@ -53,7 +53,7 @@ app.use("/api/progress", progressRoutes)
 app.use("/api/submissions", submissionRoutes)
 
 app.use(express.static(path.join(__dirname, "..", "frontend", "vite-project", "dist")));
-app.get("*", (req, res) => {
+app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.resolve(__dirname, "..", "frontend", "vite-project", "dist", "index.html"));
 });
 
