@@ -10,7 +10,7 @@ const HeaderAdmin = () => {
 
   const logoutHandler = async()=>{
     try{
-      const res = await fetch("https://flight-training-platform-backend.onrender.com/users/logout", {
+      const res = await fetch("https://flight-training-platform-backend-cors.onrender.com/users/logout", {
         method : "GET",
         headers : {
           "Content-Type" : "application/json"
