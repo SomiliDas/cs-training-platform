@@ -143,7 +143,7 @@ const EachProgram = () => {
         navigate("/users/topup")
         return
       }
-      let res = await fetch(`/users/enroll/${progId}`, {
+      let res = await fetch(`/api/users/enroll/${progId}`, {
         method:"POST",
         credentials:"include"
       })
