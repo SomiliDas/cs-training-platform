@@ -31,7 +31,7 @@ const EditProfile = () => {
         formData.append("password", password)
         formData.append("profilePic", profilePic)
         try{
-            const res = await fetch(`https://flight-training-platform-backend.onrender.com/users/profile/${id}`, {
+            const res = await fetch(`https://flight-training-platform-backend-cors.onrender.com/users/profile/${id}`, {
                 method : "PUT",
                 
                 body : formData,
