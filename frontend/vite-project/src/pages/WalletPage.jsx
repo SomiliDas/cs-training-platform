@@ -15,7 +15,7 @@ export default function WalletPage() {
     useEffect(()=>{
         const fetchBalance = async()=>{
             try{
-                const res = await fetch("https://flight-training-platform-backend.onrender.com/transactions/balance", {
+                const res = await fetch("https://flight-training-platform-backend-cors.onrender.com/transactions/balance", {
                     method : "GET",
                     credentials : "include"
                 })
@@ -34,7 +34,7 @@ export default function WalletPage() {
 
         const fetchTransHist = async()=>{
             try{
-                let res = await fetch("https://flight-training-platform-backend.onrender.com/transactions/history", {
+                let res = await fetch("https://flight-training-platform-backend-cors.onrender.com/transactions/history", {
                     method:"GET",
                     credentials:"include"
                 })
