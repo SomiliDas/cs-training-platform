@@ -11,7 +11,7 @@ export default function MyProgs() {
       useEffect(()=>{
         let getPrograms = async()=>{
                 try{
-                    let res = await fetch(`https://flight-training-platform-backend.onrender.com/users/enrolledPrograms`, {
+                    let res = await fetch(`https://flight-training-platform-backend-cors.onrender.com/users/enrolledPrograms`, {
                         method:"GET",
                         credentials:"include"
                     })
@@ -48,7 +48,7 @@ export default function MyProgs() {
                 programs.map((program)=>(
                     <div className="bg-white rounded-xl shadow-md overflow-hidden">
                     <img
-                        src={`https://flight-training-platform-backend.onrender.com/images/${program.programPic}`}
+                        src={`https://flight-training-platform-backend-cors.onrender.com/images/${program.programPic}`}
                         alt={program.title}
                         className="w-full h-48"
                     />
