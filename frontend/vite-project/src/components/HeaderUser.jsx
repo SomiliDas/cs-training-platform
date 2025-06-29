@@ -13,7 +13,7 @@ const HeaderUser = () => {
   useEffect(()=>{
     const fetchId = async()=>{
       try{
-        const res = await fetch("https://flight-training-platform-backend.onrender.com/users/getId", {
+        const res = await fetch("https://flight-training-platform-backend-cors.onrender.com/users/getId", {
           method : "GET",
           headers : {
             "Content-Type" : "application/json"
