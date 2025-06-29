@@ -16,7 +16,7 @@ export default function AttemptTaskPage() {
     useEffect(()=>{
         const fetchProgressList = async ()=>{
             try{
-                let res = await fetch("https://flight-training-platform-backend.onrender.com/progress/tasks", {
+                let res = await fetch("https://flight-training-platform-backend-cors.onrender.com/progress/tasks", {
                     method:"GET",
                     credentials:"include"
                 })
@@ -38,7 +38,7 @@ export default function AttemptTaskPage() {
         try{
 
             if(status === "Not Accepted"){
-                let d_res = await fetch(`https://flight-training-platform-backend.onrender.com/transactions/attempt-task/${taskId}`, {
+                let d_res = await fetch(`https://flight-training-platform-backend-cors.onrender.com/transactions/attempt-task/${taskId}`, {
                     method:"POST",
                     credentials:"include"
                 })
@@ -53,7 +53,7 @@ export default function AttemptTaskPage() {
             }
             else if (status=== "In Progress"){
                 
-                let s_res = await fetch(`https://flight-training-platform-backend.onrender.com/submissions/submit/${taskId}`, {
+                let s_res = await fetch(`https://flight-training-platform-backend-cors.onrender.com/submissions/submit/${taskId}`, {
                     method:"POST",
                     credentials:"include"
                 })
@@ -65,7 +65,7 @@ export default function AttemptTaskPage() {
                     status = "Completed"
                 }
             }
-            let res = await fetch(`https://flight-training-platform-backend.onrender.com/progress/update/${taskId}`,{
+            let res = await fetch(`https://flight-training-platform-backend-cors.onrender.com/progress/update/${taskId}`,{
                 method: "PUT",
                 credentials:"include",
                 headers:{
