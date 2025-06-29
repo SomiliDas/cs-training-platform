@@ -75,7 +75,7 @@ export default function ProgramsPage() {
           programs.map((program)=>(
             <div className="bg-white rounded-xl shadow-md overflow-hidden">
               <img
-                src={`http://localhost:8000/images/${program.programPic}`}
+                src={`https://flight-training-platform-backend.onrender.com/images/${program.programPic}`}
                 alt={program.title}
                 className="w-full h-48"
               />
