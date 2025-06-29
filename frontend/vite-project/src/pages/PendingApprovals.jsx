@@ -39,7 +39,7 @@ export default function PendingApprovals() {
             }else{
                 const data = await res.json()
                 setSubs(subs.filter((sub)=>(sub._id !== data.submission._id)))
-                toast.error("Approval Succesfull")
+                toast.success("Approval Succesfull")
             }
         }catch(err){
             console.log(err)
