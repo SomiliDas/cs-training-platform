@@ -8,7 +8,7 @@ export default function AllTasks() {
     useEffect(()=>{
         let fetchTasks = async ()=>{
             try{
-                let res = await fetch("https://flight-training-platform-backend-cors.onrender.com/tasks/allTasks", {
+                let res = await fetch("http://localhost:8000/tasks/allTasks", {
                     method:"GET",
                     credentials:"include"
                 })
