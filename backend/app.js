@@ -6,7 +6,7 @@ const path = require("path")
 const dbConnection = require("./config/dbConnection")
 const cors = require('cors')
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://flight-training-platform-frontend.onrender.com',
   credentials: true
 }))
 
