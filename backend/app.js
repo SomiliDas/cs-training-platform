@@ -53,9 +53,13 @@ app.use("/api/progress", progressRoutes)
 app.use("/api/submissions", submissionRoutes)
 
 app.use(express.static(path.join(__dirname, "..", "frontend", "vite-project", "dist")));
-app.get(/^\/(?!api).*/, (req, res) => {
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.includes('.')) {
+    return next(); // Let static or API middleware handle it
+  }
   res.sendFile(path.resolve(__dirname, "..", "frontend", "vite-project", "dist", "index.html"));
 });
+
 
 
 const PORT = process.env.PORT || 8000
