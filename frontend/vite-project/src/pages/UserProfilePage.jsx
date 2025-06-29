@@ -11,7 +11,7 @@ const UserProilePage = () => {
     const studentId = useParams().id
     useEffect(()=>{
        const fetchUser = async ()=>{ try{
-            const res = await fetch(`http://localhost:8000/users/profile/${studentId}`, {
+            const res = await fetch(`https://flight-training-platform-backend.onrender.com/users/profile/${studentId}`, {
                 method : "GET",
                 headers : {
                     "Content-Type" : "application/json"
