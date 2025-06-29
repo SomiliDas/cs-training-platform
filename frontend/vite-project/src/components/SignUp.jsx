@@ -15,7 +15,7 @@ function SignUp() {
     e.preventDefault()
     try{
 
-      const res = await fetch("http://localhost:8000/users/register", {
+      const res = await fetch("https://flight-training-platform-backend.onrender.com/users/register", {
         method : "POST",
         headers : {
            'Content-Type': 'application/json'
