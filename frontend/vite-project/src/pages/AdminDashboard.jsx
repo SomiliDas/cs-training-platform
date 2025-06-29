@@ -13,7 +13,7 @@ export default function AdminDashboard() {
     useEffect(()=>{
         const getTotalPrograms = async()=>{
             try{
-                let res = await fetch("http://localhost:8000/programs/getPrograms", {
+                let res = await fetch("https://flight-training-platform-backend.onrender.com/programs/getPrograms", {
                     method:"GET",
                     credentials:"include"
                 })
