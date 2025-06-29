@@ -13,7 +13,7 @@ export default function StudentProgressPage() {
     useEffect(()=>{
         const fetchProgress = async ()=>{
             try{
-                let res = await fetch("http://localhost:8000/progress/admin/view", {
+                let res = await fetch("https://flight-training-platform-backend.onrender.com/progress/admin/view", {
                     method:"GET",
                     credentials : "include"
                 })
