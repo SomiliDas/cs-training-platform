@@ -6,7 +6,7 @@ const path = require("path")
 const dbConnection = require("./config/dbConnection")
 const cors = require('cors')
 const allowedOrigins = [
-  'https://flight-training-platform-frontend.onrender.com',
+  'https://flight-training-platform-frontend-cors.onrender.com',
   'http://localhost:5173'
 ];
 
