@@ -5,7 +5,7 @@ const path = require("path")
 
 
 const dbConnection = require("./config/dbConnection")
-dbConnection();
+
 
 const cors = require('cors')
 const allowedOrigins = [
