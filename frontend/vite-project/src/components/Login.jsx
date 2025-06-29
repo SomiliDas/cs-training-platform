@@ -10,7 +10,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-       const response = await fetch('https://flight-training-platform-backend.onrender.com/users/login', {
+       const response = await fetch('https://flight-training-platform-backend-cors.onrender.com/users/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
